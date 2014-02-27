@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="iso-8859-1"?><graphml xmlns="http://graphml.graphdrawing.org/xmlns"xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd"> <key id="x" for="node" attr.name="x coordinate" attr.type="int"/> <key id="y" for="node" attr.name="y coordinate" attr.type="int"/> <key id="label" for="node" attr.name="station name" attr.type="string"/> <key id="date" for="node" attr.name="date" attr.type="string"/> <key id="dummy" for="node" attr.name="dummy" attr.type="int"> <default>0</default> </key>
+
+<key id="l0" for="edge" attr.name="line 0" attr.type="boolean" color.r="0" color.g="255" color.b="0" importance="10" title=""><default>FALSE</default></key>
+<key id="l1" for="edge" attr.name="line 1" attr.type="boolean" color.r="0" color.g="255" color.b="0" importance="10" title=""><default>FALSE</default></key>
+
+
+<graph id="G" edgedefault="undirected">
+
+<node id="n896"><data key="x">0</data> <data key="y">0</data> <data key="label">896</data><data key="date">31/12/1969</data> <data key="dummy">0</data></node>
+<node id="n423"><data key="x">0</data> <data key="y">0</data> <data key="label">423</data><data key="date">31/12/1969</data> <data key="dummy">0</data></node>
+<node id="n1001"><data key="x">0</data> <data key="y">0</data> <data key="label">1001</data><data key="date">21/02/2014</data> <data key="dummy">0</data></node>
+<node id="n204"><data key="x">0</data> <data key="y">0</data> <data key="label">204</data><data key="date">31/12/1969</data> <data key="dummy">0</data></node>
+<node id="n411"><data key="x">0</data> <data key="y">0</data> <data key="label">411</data><data key="date">31/12/1969</data> <data key="dummy">0</data></node>
+<node id="n413"><data key="x">0</data> <data key="y">0</data> <data key="label">413</data><data key="date">31/12/1969</data> <data key="dummy">0</data></node>
+
+
+<edge id="e0" source="n411" target="n413"><data key="l0">true</data></edge>
+<edge id="e1" source="n413" target="n423"><data key="l0">true</data></edge>
+
+<edge id="e2" source="n204" target="n896"><data key="l1">true</data></edge>
+<edge id="e3" source="n896" target="n1001"><data key="l1">true</data></edge>
+
+
+</graph></graphml>

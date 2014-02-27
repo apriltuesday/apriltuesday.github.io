@@ -11,7 +11,7 @@
   	<default>0</default>
   </key>
 
-  <key id="l0" for="edge" attr.name="line 0" attr.type="boolean" color.r="0" color.g="255" color.b="0" importance="10" title="kittens">
+  <key id="l0" for="edge" attr.name="line 0" attr.type="boolean" color.r="0" color.g="255" color.b="0" importance="10" title="debt, austerity, credit">
     <default>FALSE</default>
   </key>
 
@@ -20,21 +20,24 @@
   </key>
 
 
+  
+
+========================================================
   <graph id="G" edgedefault="undirected">
 
 <node id="n9572">
-<data key="x">0</data> <data key="y">0</data><data key="label">Kitten the first</data>
+<data key="x">40156</data> <data key="y">0</data><data key="label">Kitten the first</data>
 <data key="date">11/12/2009</data> <data key="dummy">0</data>
 </node>
 
 
 <node id="n11072">
-<data key="x">0</data> <data key="y">0</data><data key="label">Kitten the second</data>
+<data key="x">40209</data> <data key="y">0</data><data key="label">Kitten the second</data>
 <data key="date">02/02/2010</data> <data key="dummy">0</data>
 </node>
 
 <node id="n11496">
-<data key="x">0</data> <data key="y">0</data><data key="label">Kitten the third</data>
+<data key="x">40223</data> <data key="y">0</data><data key="label">Kitten the third</data>
 <data key="date">16/02/2010</data> <data key="dummy">0</data></node>
 
 
