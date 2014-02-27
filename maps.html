@@ -20,7 +20,7 @@
       body {font-family:'Times New Roman'}
       #debug-container {margin:0 1em;}
       #debug-container td {padding: 0 0.5em;}
-      #fulltext {min-width:600px;padding-left:2em;vertical-align:top;}
+      #fulltext {max-width:500px;padding-left:2em;vertical-align:top;}
       #svg-container {height:600px}
       .ui-button {font-size:0.7em; }
       .controls {height:1em}
@@ -68,18 +68,19 @@
       <tr>
         <td colspan="2" id="svg-container">
         </td>
-        <td rowspan="3" id="fulltext">
-        </td>
       </tr>
-      <tr class="controls">
+<!--      <tr class="controls">
           <td id="slideshow-controls"></td>
           <td id="time-controls"></td>
-      </tr>
+      </tr>-->
       <tr>
+        <td rowspan="3" id="fulltext">
+        </td>
+<!--
         <td style="vertical-align:top;padding-right:1em;">
           <div id="slideshow-text"></div>
         </td>
-        <td id="line-controls"></td>
+        <td id="line-controls"></td>-->
       </tr>
     </table>
     <div id="debug-container">
