@@ -155,7 +155,8 @@ function slideshow(metro) {
     timecontrols.jq().buttonset();
     */
 
-    //legend and highlighting for different lines //~ats
+    //legend and highlighting for different lines //~ats take this out for now
+    /*
     linecontrols.selectAll(".lines")
       .data([{name: "kittens", focus: "l0", svg_id: "svg_legend", color_id: "color_blue"},
              {name: "more kittens", focus: "l1", svg_id: "svg_legend", color_id: "color_orange"},
@@ -198,7 +199,7 @@ function slideshow(metro) {
           return focus == d.focus;
         });
     linecontrols.jq().buttonsetv();
-
+    */
     if (!first) {
       // mostly fixed bug by preserving selected state.  but, now
       // sometimes has black text on black background, not very
