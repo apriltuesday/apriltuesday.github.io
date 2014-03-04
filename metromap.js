@@ -157,7 +157,7 @@ function metromap(container, debug) {
   // scale for mapping times to x coordinate positions
   var timelate = d3.time.scale();
 
-  function redraw(dur) {
+  function redraw(dur) { //~ats where drawing occurs!
     if (arguments.length < 1) dur = 0;
     // XXX use precomputed selection for efficiency (but remember to
     // update on changes)
@@ -449,8 +449,9 @@ function metromap(container, debug) {
       .enter()
       .insert("path", ".line")
       .attr("class", "metroline")
-      .style("stroke", function(l) {return color(l.id)})
-      .style("stroke-width", 7)
+	.style("stroke", function(l) {return l.id === "l0" ? '#707070' : color(l.id)}) // ~ats
+	.style("stroke-width", function(l) {return l.id === "l0" ? 4 : 7})
+	.style("stroke-dasharray", function(l) {return l.id === "l0"? "4, 4" : "1, 0"})
       // pick some nice stroke rounding algo
       .style("fill", "none");
 
