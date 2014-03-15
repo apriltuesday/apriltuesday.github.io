@@ -90,7 +90,7 @@
 var metro; // for easy console access
 var ss; //ditto
 function initData(callback) { //in debug case, THIS is where we get data! ~ats
-  d3.xml("newTest.graphml", function(doc) { //so this graphml file is what we need to generate
+  d3.xml("current.graphml", function(doc) { //so this graphml file is what we need to generate
     var nodetable = d3.map();
     var nodes = [];
     var links = [];
@@ -216,7 +216,7 @@ ss(d3.select("#slideshow-controls"), d3.select("#time-controls"), d3.select("#li
 
 if (debug) {
 /*
-  var state = localStorage.getItem("state");
+//  var state = localStorage.getItem("state");
   try {
     var parsed = JSON.parse(state);
     if (!parsed) throw "nothing";
@@ -234,7 +234,7 @@ clear()
   debugForce(metro, d3.select("#debug-container"));
 } else { // if not in debug mode, use this json ~ats
   d3.select("#debug-container").style("display", "none");
-  d3.json("newTest.json", function(doc) { //~ats
+  d3.json("current.json", function(doc) { //~ats
     metro.state(doc);
     metro();
     metro.mode(MetroMode.VIEW);

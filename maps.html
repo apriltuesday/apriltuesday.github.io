@@ -69,10 +69,10 @@
         <td colspan="2" id="svg-container">
         </td>
       </tr>
-<!--      <tr class="controls">
-          <td id="slideshow-controls"></td>
+      <tr class="controls">
+        <!--<td id="slideshow-controls"></td>-->
           <td id="time-controls"></td>
-      </tr>-->
+      </tr>
       <tr>
         <td rowspan="3" id="fulltext">
         </td>
@@ -90,7 +90,7 @@
 var metro; // for easy console access
 var ss; //ditto
 function initData(callback) { //in debug case, THIS is where we get data! ~ats
-  d3.xml("current.graphml", function(doc) { //so this graphml file is what we need to generate
+  d3.xml("realRegionTest.graphml", function(doc) { //so this graphml file is what we need to generate
     var nodetable = d3.map();
     var nodes = [];
     var links = [];
@@ -234,7 +234,7 @@ clear()
   debugForce(metro, d3.select("#debug-container"));
 } else { // if not in debug mode, use this json ~ats
   d3.select("#debug-container").style("display", "none");
-  d3.json("current.json", function(doc) { //~ats
+  d3.json("realRegionTest.json", function(doc) { //~ats
     metro.state(doc);
     metro();
     metro.mode(MetroMode.VIEW);

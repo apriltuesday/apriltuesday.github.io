@@ -20,8 +20,8 @@ function slideshow(metro) {
     if (d) { // HERE ~ats
       d3.html("imagePages/" + d.id.substr(1) + ".html", function(doc) {
         $("#fulltext")
-          .append("<h1>"+d.label+"</h1>")
-          .append("<p>"+d3.time.format("%Y-%m-%d")(d.date)+"</p>")
+	    //          .append("<h1>"+d.label+"</h1>")
+	    //          .append("<p>"+d3.time.format("%Y-%m-%d")(d.date)+"</p>")
           .append(doc);
       });
     }

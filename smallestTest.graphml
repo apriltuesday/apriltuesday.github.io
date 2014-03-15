@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="iso-8859-1"?><graphml xmlns="http://graphml.graphdrawing.org/xmlns"xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd"> <key id="x" for="node" attr.name="x coordinate" attr.type="int"/> <key id="y" for="node" attr.name="y coordinate" attr.type="int"/> <key id="label" for="node" attr.name="station name" attr.type="string"/> <key id="date" for="node" attr.name="date" attr.type="string"/> <key id="dummy" for="node" attr.name="dummy" attr.type="int"> <default>0</default> </key>
+
+<key id="link0" for="edge" attr.name="link 0" attr.type="boolean" color.r="0" color.g="255" color.b="0" importance="10" title=""><default>FALSE</default></key>
+<key id="link1" for="edge" attr.name="link 1" attr.type="boolean" color.r="0" color.g="255" color.b="0" importance="10" title=""><default>FALSE</default></key>
+<key id="link2" for="edge" attr.name="link 2" attr.type="boolean" color.r="0" color.g="255" color.b="0" importance="10" title=""><default>FALSE</default></key>
+<key id="link3" for="edge" attr.name="link 3" attr.type="boolean" color.r="0" color.g="255" color.b="0" importance="10" title=""><default>FALSE</default></key>
+<key id="link4" for="edge" attr.name="link 4" attr.type="boolean" color.r="0" color.g="255" color.b="0" importance="10" title=""><default>FALSE</default></key>
+<key id="link5" for="edge" attr.name="link 5" attr.type="boolean" color.r="0" color.g="255" color.b="0" importance="10" title=""><default>FALSE</default></key>
+<key id="link6" for="edge" attr.name="link 6" attr.type="boolean" color.r="0" color.g="255" color.b="0" importance="10" title=""><default>FALSE</default></key>
+<key id="link7" for="edge" attr.name="link 7" attr.type="boolean" color.r="0" color.g="255" color.b="0" importance="10" title=""><default>FALSE</default></key>
+<key id="link8" for="edge" attr.name="link 8" attr.type="boolean" color.r="0" color.g="255" color.b="0" importance="10" title=""><default>FALSE</default></key>
+<key id="link9" for="edge" attr.name="link 9" attr.type="boolean" color.r="0" color.g="255" color.b="0" importance="10" title=""><default>FALSE</default></key>
+<key id="link10" for="edge" attr.name="link 10" attr.type="boolean" color.r="0" color.g="255" color.b="0" importance="10" title=""><default>FALSE</default></key>
+<key id="link11" for="edge" attr.name="link 11" attr.type="boolean" color.r="0" color.g="255" color.b="0" importance="10" title=""><default>FALSE</default></key>
+<key id="link12" for="edge" attr.name="link 12" attr.type="boolean" color.r="0" color.g="255" color.b="0" importance="10" title=""><default>FALSE</default></key>
+<key id="link13" for="edge" attr.name="link 13" attr.type="boolean" color.r="0" color.g="255" color.b="0" importance="10" title=""><default>FALSE</default></key>
+<key id="link14" for="edge" attr.name="link 14" attr.type="boolean" color.r="0" color.g="255" color.b="0" importance="10" title=""><default>FALSE</default></key>
+<key id="link15" for="edge" attr.name="link 15" attr.type="boolean" color.r="0" color.g="255" color.b="0" importance="10" title=""><default>FALSE</default></key>
+<key id="link16" for="edge" attr.name="link 16" attr.type="boolean" color.r="0" color.g="255" color.b="0" importance="10" title=""><default>FALSE</default></key>
+<key id="link17" for="edge" attr.name="link 17" attr.type="boolean" color.r="0" color.g="255" color.b="0" importance="10" title=""><default>FALSE</default></key>
+<key id="link18" for="edge" attr.name="link 18" attr.type="boolean" color.r="0" color.g="255" color.b="0" importance="10" title=""><default>FALSE</default></key>
+<key id="link19" for="edge" attr.name="link 19" attr.type="boolean" color.r="0" color.g="255" color.b="0" importance="10" title=""><default>FALSE</default></key>
+
+<key id="l0" for="edge" attr.name="line 0" attr.type="boolean" color.r="0" color.g="255" color.b="0" importance="10" title=""><default>FALSE</default></key>
+<key id="l1" for="edge" attr.name="line 1" attr.type="boolean" color.r="0" color.g="255" color.b="0" importance="10" title=""><default>FALSE</default></key>
+<key id="l2" for="edge" attr.name="line 2" attr.type="boolean" color.r="0" color.g="255" color.b="0" importance="10" title=""><default>FALSE</default></key>
+<key id="l3" for="edge" attr.name="line 3" attr.type="boolean" color.r="0" color.g="255" color.b="0" importance="10" title=""><default>FALSE</default></key>
+
+
+<graph id="G" edgedefault="undirected">
+
+<node id="n155"><data key="x">0</data> <data key="y">0</data> <data key="label">155</data><data key="date">27/09/2006</data> <data key="dummy">0</data></node>
+<node id="n292"><data key="x">0</data> <data key="y">0</data> <data key="label">292</data><data key="date">01/08/2007</data> <data key="dummy">0</data></node>
+<node id="n167"><data key="x">0</data> <data key="y">0</data> <data key="label">167</data><data key="date">20/10/2006</data> <data key="dummy">0</data></node>
+<node id="n232"><data key="x">0</data> <data key="y">0</data> <data key="label">232</data><data key="date">27/02/2014</data> <data key="dummy">0</data></node>
+<node id="n9"><data key="x">0</data> <data key="y">0</data> <data key="label">9</data><data key="date">30/05/2004</data> <data key="dummy">0</data></node>
+<node id="n299"><data key="x">0</data> <data key="y">0</data> <data key="label">299</data><data key="date">27/02/2014</data> <data key="dummy">0</data></node>
+<node id="n147"><data key="x">0</data> <data key="y">0</data> <data key="label">147</data><data key="date">30/07/2006</data> <data key="dummy">0</data></node>
+<node id="n55"><data key="x">0</data> <data key="y">0</data> <data key="label">55</data><data key="date">15/06/2009</data> <data key="dummy">0</data></node>
+<node id="n247"><data key="x">0</data> <data key="y">0</data> <data key="label">247</data><data key="date">27/02/2014</data> <data key="dummy">0</data></node>
+<node id="n169"><data key="x">0</data> <data key="y">0</data> <data key="label">169</data><data key="date">21/10/2006</data> <data key="dummy">0</data></node>
+<node id="n250"><data key="x">0</data> <data key="y">0</data> <data key="label">250</data><data key="date">01/08/2007</data> <data key="dummy">0</data></node>
+<node id="n27"><data key="x">0</data> <data key="y">0</data> <data key="label">27</data><data key="date">23/03/2012</data> <data key="dummy">0</data></node>
+<node id="n151"><data key="x">0</data> <data key="y">0</data> <data key="label">151</data><data key="date">31/07/2006</data> <data key="dummy">0</data></node>
+<node id="n221"><data key="x">0</data> <data key="y">0</data> <data key="label">221</data><data key="date">27/02/2014</data> <data key="dummy">0</data></node>
+<node id="n158"><data key="x">0</data> <data key="y">0</data> <data key="label">158</data><data key="date">05/10/2006</data> <data key="dummy">0</data></node>
+
+
+<edge id="e1" source="n27" target="n167"><data key="link1">true</data></edge>
+<edge id="e2" source="n27" target="n155"><data key="link2">true</data></edge>
+<edge id="e4" source="n167" target="n151"><data key="link4">true</data></edge>
+<edge id="e7" source="n167" target="n169"><data key="link7">true</data></edge>
+<edge id="e8" source="n250" target="n151"><data key="link8">true</data></edge>
+<edge id="e9" source="n250" target="n167"><data key="link9">true</data></edge>
+<edge id="e10" source="n250" target="n155"><data key="link10">true</data></edge>
+<edge id="e11" source="n250" target="n169"><data key="link11">true</data></edge>
+<edge id="e12" source="n155" target="n151"><data key="link12">true</data></edge>
+<edge id="e13" source="n155" target="n167"><data key="link13">true</data></edge>
+<edge id="e15" source="n155" target="n169"><data key="link15">true</data></edge>
+<edge id="e16" source="n299" target="n151"><data key="link16">true</data></edge>
+<edge id="e19" source="n299" target="n169"><data key="link19">true</data></edge>
+
+<edge id="e40" source="n27" target="n167"><data key="l0">true</data></edge>
+<edge id="e41" source="n167" target="n250"><data key="l0">true</data></edge>
+<edge id="e42" source="n250" target="n155"><data key="l0">true</data></edge>
+<edge id="e43" source="n155" target="n299"><data key="l0">true</data></edge>
+
+<edge id="e44" source="n221" target="n158"><data key="l1">true</data></edge>
+<edge id="e45" source="n158" target="n247"><data key="l1">true</data></edge>
+<edge id="e46" source="n247" target="n9"><data key="l1">true</data></edge>
+<edge id="e47" source="n9" target="n292"><data key="l1">true</data></edge>
+
+<edge id="e48" source="n151" target="n167"><data key="l2">true</data></edge>
+<edge id="e49" source="n167" target="n155"><data key="l2">true</data></edge>
+<edge id="e50" source="n155" target="n169"><data key="l2">true</data></edge>
+
+<edge id="e51" source="n55" target="n147"><data key="l3">true</data></edge>
+<edge id="e52" source="n147" target="n247"><data key="l3">true</data></edge>
+<edge id="e53" source="n247" target="n232"><data key="l3">true</data></edge>
+
+
+</graph></graphml>

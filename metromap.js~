@@ -449,9 +449,9 @@ function metromap(container, debug) {
       .enter()
       .insert("path", ".line")
       .attr("class", "metroline")
-	.style("stroke", function(l) {return l.id === "l0" ? '#707070' : color(l.id)}) // ~ats
-	.style("stroke-width", function(l) {return l.id === "l0" ? 4 : 7})
-	.style("stroke-dasharray", function(l) {return l.id === "l0"? "4, 4" : "1, 0"})
+	.style("stroke", function(l) {return l.id === "l0" || l.id === "l4" || l.id === "l5" || l.id === "l6"? '#707070' : color(l.id)}) // ~ats XXX HACK
+	.style("stroke-width", function(l) {return l.id === "l0" || l.id === "l4" || l.id === "l5" || l.id === "l6" ? 4 : 7})
+	.style("stroke-dasharray", function(l) {return l.id === "l0" || l.id === "l4" || l.id === "l5" || l.id === "l6"? "4, 4" : "1, 0"})
       // pick some nice stroke rounding algo
       .style("fill", "none");
 
