@@ -124,7 +124,7 @@ function metromap(container, debug) {
   var dummyid = 0;
 
   var realsvg = container.append("svg"),
-      //      axis = realsvg.append("g").attr("class", "axis"),
+      axis = realsvg.append("g").attr("class", "axis"),
       svg = realsvg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
   var force = d3.layout.force() // some defaults (they're not very good ;-)
@@ -332,13 +332,13 @@ function metromap(container, debug) {
 
   function my(dur) {
 
-      /*    timelate.domain(d3.extent(force.nodes(), function(d) {return d.date}));
+      timelate.domain(d3.extent(force.nodes(), function(d) {return d.date}));
         axis.transition().call(
             d3.svg.axis().scale(timelate)
               .orient("bottom")
-              .ticks(d3.time.months, 1)
-              .tickFormat(d3.time.format('%b %Y'))
-	      );*/
+              .ticks(d3.time.years, 1)
+              .tickFormat(d3.time.format('%Y'))
+			       ); //~ats timeline
 
     var cdata = svg.selectAll(".circle")
       .data(force.nodes());
@@ -449,9 +449,9 @@ function metromap(container, debug) {
       .enter()
       .insert("path", ".line")
       .attr("class", "metroline")
-	.style("stroke", function(l) {return l.id === "l0" || l.id === "l4" || l.id === "l5" || l.id === "l6"? '#707070' : color(l.id)}) // ~ats XXX HACK
-	.style("stroke-width", function(l) {return l.id === "l0" || l.id === "l4" || l.id === "l5" || l.id === "l6" ? 4 : 7})
-	.style("stroke-dasharray", function(l) {return l.id === "l0" || l.id === "l4" || l.id === "l5" || l.id === "l6"? "4, 4" : "1, 0"})
+	.style("stroke", function(l) {return l.id.lastIndexOf("link", 0) === 0? '#707070' : color(l.id)}) // ~ats XXX HACK
+	.style("stroke-width", function(l) {return l.id.lastIndexOf("link", 0) === 0? 4 : 7})
+	.style("stroke-dasharray", function(l) {return l.id.lastIndexOf("link", 0) === 0? "4, 4" : "1, 0"})
       // pick some nice stroke rounding algo
       .style("fill", "none");
 
@@ -546,7 +546,7 @@ function metromap(container, debug) {
     var height = v[1];
     realsvg.attr("width", v[0]);
     realsvg.attr("height", v[1]);
-    //    axis.attr("transform", "translate(" + margin.left + "," + (height - margin.bottom) + ")");
+    axis.attr("transform", "translate(" + margin.left + "," + (height - margin.bottom) + ")");
     force.size(v);
     timelate.range([0, width-margin.left-margin.right]);
     return my;

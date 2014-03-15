@@ -501,9 +501,9 @@ function metromap(container, debug) {
       .style("border-radius", "3px")
       .insert("span")
       .attr("class", "thespan");
-    textdiv.insert("span").text(function(d) {return d.label});
-    textdiv.insert("br");
-    textdiv.insert("span").text(function(d) {return d3.time.format("%Y-%m-%d")(d.date)});
+    //    textdiv.insert("span").text(function(d) {return d.label});
+    //    textdiv.insert("br");
+    //    textdiv.insert("span").text(function(d) {return d3.time.format("%Y-%m-%d")(d.date)}); //~ats date label on nodes
 
     force.start();
     redraw(dur ? dur : 0); // force a redraw, in case we immediately stop
