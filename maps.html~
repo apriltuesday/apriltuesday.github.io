@@ -1,133 +1,44 @@
-<!-- Originally via ezyang, modified by april@cs.uw.edu -->
+<!-- New version by April Shen april@cs.uw.edu -->
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" href="jquery-ui.css" />
-    <script src="d3.v2.js"></script>
-    <script src="jquery-1.8.2.js"></script>
-    <script src="jquery-ui.js"></script>
-    <script src="jquery.fireEvent.js"></script> <!-- fix D3/jQuery interoperability issues -->
-    <script src="ultbuttons.js"></script> <!-- fix jQuery UI bug with checkbox buttons -->
-    <!-- our stuff -->
-    <script src="pforce.js"></script>
-    <script src="vector.js"></script>
-    <script src="util.js"></script>
-    <script src="metromap.js"></script>
-    <script src="slideshow.js"></script>
-    <script src="debug.js"></script>
+    <meta charset="UTF-8" />
+    <title>Metro Maps for Photos</title>
+    <script type="text/javascript" src="d3.v2.js"></script>
     <style>
-      body {font-family:'Times New Roman'}
-      #debug-container {margin:0 1em;}
-      #debug-container td {padding: 0 0.5em;}
-      #fulltext {max-width:500px;padding-left:2em;vertical-align:top;}
-      #svg-container {height:600px}
-      .ui-button {font-size:0.7em; }
-      .controls {height:1em}
-      .controls td {padding: 0 0.5em 0 0;}
-      .controls .ui-button span {padding:.2em .5em}
-      #time-controls {width:140px;text-align:right;}
-      #slideshow-controls {padding-top: .5em;}
-      #line-controls {vertical-align: top;text-align:right;padding-top:10px;}
-      /* See jQuery UI bug http://bugs.jqueryui.com/ticket/8827 */
-      .ui-buttonset .ui-button {margin:0; margin-right:-1px;}
-      .ui-state-hover, .ui-state-active {z-index:1;}
-      .text img {float:left; margin-right: 1em;}
-      #fulltext a {text-decoration:none; color:#000;}
-      .image {float: right; width:200px;margin-left:2em;}
-      .image h6 {margin:0;color:#999; }
-      .image .caption {font-size:12px;}
-      #svg_legend {width:20px;height:10px;margin:0;}
-      /* ezyang: This is BAD */
-      #color_blue {stroke: #1f77b4; stroke-width: 7px; fill: none;}
-      #color_orange {stroke: #ff7f0e; stroke-width: 7px; fill: none;}
-      #color_green {stroke: #2ca02c; stroke-width: 7px; fill: none;}
-      #color_red {stroke: #d62728; stroke-width: 7px; fill: none;}
-      #color_none {stroke-width:0;}
-      #slideshow-text h2 {margin-top:10px; margin-bottom: 7px;}
-      .lines label {text-align:left; width:14em;}
-      .img_div {width:400px; float:left; padding:0 20px 20px 0;}
-      .img_attr {color:grey; text-align: right; width:400px; display: block; font-family: Verdana; font-size: smaller;}
-.axis path,
-.axis line {
-    fill: none;
-    stroke: #CCC;
-    shape-rendering: crispEdges;
-}
-
-.axis text {
-    font-family: sans-serif;
-    color: #CCC;
-    font-size: 11px;
-}
+      .axis path,
+      .axis line {
+          fill: none;
+          stroke: black;
+          shape-rendering: crispEdges;
+      }
+      .axis text {
+          font-family: sans-serif;
+          font-size: 11px;
+      }
     </style>
   </head>
   <body>
-    <!--<h1>Metro Maps of the News</h1>-->
-    <table>
-      <tr>
-        <td colspan="2" id="svg-container">
-        </td>
-      </tr>
-<!--      <tr class="controls">
-          <td id="slideshow-controls"></td>
-          <td id="time-controls"></td>
-      </tr>-->
-      <tr>
-        <td rowspan="3" id="fulltext">
-        </td>
-<!--
-        <td style="vertical-align:top;padding-right:1em;">
-          <div id="slideshow-text"></div>
-        </td>
-        <td id="line-controls"></td>-->
-      </tr>
-    </table>
-    <div id="debug-container">
-      <div>(Press SHIFT to delete nodes.)</div>
-    </div>
     <script>
-var metro; // for easy console access
-var ss; //ditto
-function initData(callback) { //in debug case, THIS is where we get data! ~ats
-  d3.xml("current.graphml", function(doc) { //so this graphml file is what we need to generate
-    var nodetable = d3.map();
-    var nodes = [];
-    var links = [];
-    var format = d3.time.format("%d/%m/%Y");
-    // TODO: The first step is to simplify our graph by removing all
-    // straight line segments of the graph.  The end result
-    // should be a new list of key nodes (nodes with adjacent edge
-    // count not equal to two) and edges for all of those nodes, with
-    // weight equal to the number of edges that they are representing.
-    // For example:
-    //   A -- B -- C -- D
-    // reduces to:
-    //   A -- D  (with edge weight = 3)
-    // XXX I think with links this becomes a bit more delicate,
-    // since a link still wants to be represented as a polyline
-    // including the removed nodes.  Essentially, if we have:
-    //   A -- B -- C
-    // Then if I click on "B" it should be promoted to a real node,
-    // and if I click on the edge "A -- B", then I should insert a
-    // dummy node
-    d3.select(doc).selectAll("node").each(function () {
-      var e = d3.select(this);
-      var id = e.attr("id");
-      var sx = parseInt(e.select("data[key='x']").text()),
-          sy = parseInt(e.select("data[key='y']").text());
-      var rawtitle = e.select("data[key='label']").text().trim();
-      // XXX price would have told me to use a regex
-      var bits = rawtitle.split("\t");
-      var node = {
-        id: id,
-        label: bits[0].trim(),
-        date: format.parse(e.select("data[key='date']").text().trim()),
-        //date: format.parse(bits[1].trim()),
-        fixed: 0,
-        edges: d3.map(), // indexed by line
+      var metro;
+      var ss;
+      function initData(callback) {
+      d3.xml("realRegionTest.graphml", function(doc) {
+        var nodetable = d3.map();
+        var nodes = [];
+        var links = [];
+        var format = d3.time.format("%d/%m/%Y");
+        d3.select(doc).selectAll("node").each(function () {
+          var e = d3.select(this);
+          var id = e.attr("id");
+          var sx = parseInt(e.select("data[key='x']").text()), sy = parseInt(e.select("data[key='y']").text());
+          var node = {
+            id: id,
+            date: format.parse(e.select("data[key='date']").text().trim()),
+            fixed: 0,
+            edges: d3.map(), // indexed by line
       };
-      nodetable.set(id, node);
+                                nodetable.set(id, node);
       nodes.push(node);
     });
     // parse out the various metro lines; we'll instantiate node later
@@ -215,26 +126,11 @@ ss = slideshow(metro); // slideshow includes the clicking stuff... ~ats
 ss(d3.select("#slideshow-controls"), d3.select("#time-controls"), d3.select("#line-controls"), d3.select("#slideshow-text"));
 
 if (debug) {
-/*
-//  var state = localStorage.getItem("state");
-  try {
-    var parsed = JSON.parse(state);
-    if (!parsed) throw "nothing";
-    metro.state(parsed);
-    metro();
-    metro.stop();
-  } catch(e) {
-    //throw e; // uncomment me if you want to debug a corrupt savefile
-    if (e == "nothing") {
-      clear();
-    }
-  }
-*/
 clear()
   debugForce(metro, d3.select("#debug-container"));
 } else { // if not in debug mode, use this json ~ats
   d3.select("#debug-container").style("display", "none");
-  d3.json("current.json", function(doc) { //~ats
+  d3.json("realRegionTest.json", function(doc) { //~ats
     metro.state(doc);
     metro();
     metro.mode(MetroMode.VIEW);

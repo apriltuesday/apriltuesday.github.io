@@ -161,7 +161,7 @@ function metromap(container, debug) {
     if (arguments.length < 1) dur = 0;
     // XXX use precomputed selection for efficiency (but remember to
     // update on changes)
-    svg.selectAll(".circle")
+    svg.selectAll(".circle") //TODO ~ats create invisible photo divs
       .attr("fill", function (d) { return d.selected ? "black" : "white" })
       .attr("r", function (d) { return d.selected ? 16 : d.type != NodeType.DUMMY ? 8 : 4 })
       .transition().duration(dur)
@@ -226,7 +226,7 @@ function metromap(container, debug) {
     .attr("r", 4)
     .attr("fill", "#000")
     .attr("pointer-events", "none")
-    .style("visibility", "hidden");
+      .style("visibility", "hidden"); //~ats we get here ( i see this)
 
   // custom implementation of dragging
   function dragmove(d) {
@@ -350,21 +350,16 @@ function metromap(container, debug) {
       .attr("cy", function(d) { return d.y; })
       .call(debug ? mydrag : function() {})
       // XXX make this hitbox larger
-      .on("click", viewEdit(function(d) {
+	.on("mouseover", viewEdit(function(d) { ///~ats
         my.show(d.id);
         d3.event.stopPropagation();
         redraw();
       }, function(d) {
         // Not allowed to delete non-dummies
         if (d3.event.shiftKey && d.type == NodeType.DUMMY) {
-          // do-se-do
-          // XXX I'm not convinced this works when multiple edges are
-          // involved
           var dlinks = d.edges.values()[0];
           var n = dlinks[0].target;
           dlinks[0].target = dlinks[1].target;
-          // not necessary, since it will just get deleted
-          //dlinks[1].source = dlinks[0].source;
           // Warning: O(n) deletion
           force.links().splice(force.links().indexOf(dlinks[1]), 1);
           force.nodes().splice(force.nodes().indexOf(n), 1);
@@ -509,7 +504,7 @@ function metromap(container, debug) {
     redraw(dur ? dur : 0); // force a redraw, in case we immediately stop
   }
 
-  realsvg.on("click", onlyView(function() {
+  realsvg.on("mouseover", onlyView(function() {
     force.nodes().forEach(function(d) { d.selected = false; });
     my.showcallback()();
     redraw();
@@ -614,15 +609,13 @@ function metromap(container, debug) {
       octoforce: my.octoforce(), timeforce: my.timeforce(), monoforce: my.monoforce(), charge: my.charge(), gravity: my.gravity(), friction: my.friction(),
       linkStrength: my.linkStrength()(), linkDistance: my.linkDistance()(), size: my.size(), mode: my.mode()};
   }
-  function setState(st) {
+  function setState(st) { //here's where nodes get set? ~ats
     if (!st) return;
     var nodemap = d3.map();
     var linemap = d3.map();
     var linkmap = d3.map();
     st.nodes.forEach(function(v) {
       v.date = new Date(v.date); 
-      // ezyang: I think this is probably wrong...
-      // we should probably store this state not in the nodes
       force.nodes().forEach(function(old_n) {
         v.selected = v.selected || (old_n.selected && old_n.id == v.id);
       });
