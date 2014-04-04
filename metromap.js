@@ -161,7 +161,7 @@ function metromap(container, debug) {
     if (arguments.length < 1) dur = 0;
     // XXX use precomputed selection for efficiency (but remember to
     // update on changes)
-    svg.selectAll(".circle") //TODO ~ats create invisible photo divs
+    svg.selectAll(".circle")
       .attr("fill", function (d) { return d.selected ? "black" : "white" })
       .attr("r", function (d) { return d.selected ? 16 : d.type != NodeType.DUMMY ? 8 : 4 })
       .transition().duration(dur)
@@ -175,9 +175,7 @@ function metromap(container, debug) {
       .attr("y1", function(d) { return d.source.y; })
       .attr("x2", function(d) { return d.target.x; })
       .attr("y2", function(d) { return d.target.y; });
-    // XXX This doesn't work right if the polyline point mapping has
-    // changed (dummy nodes were added or removed).  Doing this properly
-    // is effort.
+
     var line = d3.svg.line().x(function(d) {return d.x}).y(function(d) {return d.y});
     svg.selectAll(".metroline")
       .transition().duration(dur)
@@ -201,8 +199,6 @@ function metromap(container, debug) {
       })
   }
 
-  // XXX the entire regime here is a little misguided, see also
-  // [DRAGUNREGISTER]
   // returns version of function which does nothing if mode != reqmode
   function mkOnly(reqmode) {
     return function(f) {
@@ -245,7 +241,6 @@ function metromap(container, debug) {
     } else {
       d.px += dx;
       d.py += dy;
-      // ditto
       d.x = d.px;
       d.y = d.py;
     }
@@ -303,11 +298,7 @@ function metromap(container, debug) {
       // calculate the new link by rotating around the centroid
       // to align with that direction.)
       var v = vec2(link.source, link.target);
-      // XXX how to stop overlapping?  nudging the edge too far is
-      // not stable...
-      // XXX this should respect friction
       var dir = maxr(directions, function(x) {return dot(x,v)});
-      // XXX refactor me, extra lines for handling 'fixed' nodes
       if (link.source.fixed & 1) {
         var center = vec(link.source);
         var ray = scale(norm(v), dir);
@@ -386,7 +377,6 @@ function metromap(container, debug) {
 
     function moveSelector(d) {
       var coords = d3.mouse(svg.node());
-      // XXX todo snap to coordinates of true line
       dummySelector.style("visibility", "visible")
         .attr("cx", coords[0])
         .attr("cy", coords[1]);
@@ -496,15 +486,12 @@ function metromap(container, debug) {
       .style("border-radius", "3px")
       .insert("span")
       .attr("class", "thespan");
-    //    textdiv.insert("span").text(function(d) {return d.label});
-    //    textdiv.insert("br");
-    //    textdiv.insert("span").text(function(d) {return d3.time.format("%Y-%m-%d")(d.date)}); //~ats date label on nodes
 
     force.start();
     redraw(dur ? dur : 0); // force a redraw, in case we immediately stop
   }
 
-  realsvg.on("mouseover", onlyView(function() {
+  realsvg.on("click", onlyView(function() {
     force.nodes().forEach(function(d) { d.selected = false; });
     my.showcallback()();
     redraw();
@@ -534,7 +521,6 @@ function metromap(container, debug) {
   my.friction = rm(force.friction);
   my.linkStrength = rm(force.linkStrength);
   my.linkDistance = rm(force.linkDistance);
-  // XXX dynamic resizing doesn't really work
   my.size = function(v) {
     if (!arguments.length) return force.size();
     var width = v[0];
@@ -657,12 +643,6 @@ function metromap(container, debug) {
       .linkDistance(st.linkDistance)
       .size(st.size)
       .mode(st.mode);
-  }
-
-  // XXX get rid of me
-  my.animate = function(dur) {
-    my(dur);
-    return my;
   }
 
   my.focus = function(focus) {
