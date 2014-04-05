@@ -1,7 +1,6 @@
 
 function slideshow(metro) {
   var first = true;
-  var current = 0;
   var timeology = 1;
   var focus;
 
@@ -11,7 +10,7 @@ function slideshow(metro) {
     if (d) {
       d3.html("blank.html", function(doc) {
         $("#fulltext")
-	    .append("<img style=\"max-width:400px;max-height:500px;\"  src=\"images/" + d.id.substr(1) + ".png\" >");
+	.append("<img style=\"max-width:400px;max-height:500px;\"  src=\"images/" + d.id.substr(1) + ".png\" >");
       });
     }
   };
@@ -34,9 +33,9 @@ function slideshow(metro) {
   }
 
   // CLASSES: page, next, text
-  function my(controls, timecontrols, linecontrols, panel) {
+  function my() { //controls, timecontrols, linecontrols, panel) {
     function redraw() {
-      my(controls, timecontrols, linecontrols, panel);
+	my(); //controls, timecontrols, linecontrols, panel);
     }
 
     if (!first) {
@@ -44,16 +43,6 @@ function slideshow(metro) {
     } else {
       first = false;
     }
-  }
-  my.current = function(v) {
-    if (!arguments.length) return current;
-    current = v;
-    return my;
-  }
-  my.steps = function(v) {
-    if (!arguments.length) return steps;
-    steps = v;
-    return my;
   }
   return my;
 }

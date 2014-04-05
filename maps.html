@@ -4,179 +4,84 @@
   <head>
     <meta charset="utf-8" />
     <title>Metro Maps for Photos</title>
-    <script type="text/javascript" src="d3.v2.js"></script>
-    <script src="jquery-1.8.2.js"></script>
-    <script src="jquery-ui.js"></script>
-    <script src="jquery.fireEvent.js"></script> <!-- fix D3/jQuery interoperability issues -->
-    <script src="ultbuttons.js"></script> <!-- fix jQuery UI bug with checkbox buttons -->
+    <script type="text/javascript" src="d3.v3.js"></script>
+<style>
 
-    <script src="pforce.js"></script>
-    <script src="vector.js"></script>
-    <script src="util.js"></script>
-    <script src="metromap.js"></script>
-    <script src="slideshow.js"></script>
-    <script src="debug.js"></script>
-    <style>
-      body {font-family:'Times New Roman'}
-      #debug-container {margin:0 1em;}
-      #debug-container td {padding: 0 0.5em;}
-      #fulltext {max-width:500px;padding-left:2em;vertical-align:top;}
-      #svg-container {height:600px}
-      .ui-button {font-size:0.7em; }
-      .controls {height:1em}
-      .controls td {padding: 0 0.5em 0 0;}
-      .controls .ui-button span {padding:.2em .5em}
-      #time-controls {width:140px;text-align:right;}
-      #slideshow-controls {padding-top: .5em;}
-      #line-controls {vertical-align: top;text-align:right;padding-top:10px;}
-      /* See jQuery UI bug http://bugs.jqueryui.com/ticket/8827 */
-      .ui-buttonset .ui-button {margin:0; margin-right:-1px;}
-      .ui-state-hover, .ui-state-active {z-index:1;}
-      .text img {float:left; margin-right: 1em;}
-      #fulltext a {text-decoration:none; color:#000;}
-      .image {float: right; width:200px;margin-left:2em;}
-      .image h6 {margin:0;color:#999; }
-      .image .caption {font-size:12px;}
-      #svg_legend {width:20px;height:10px;margin:0;}
+.node {
+  stroke: #fff;
+  stroke-width: 1.5px;
+}
 
-      #color_blue {stroke: #1f77b4; stroke-width: 7px; fill: none;}
-      #color_orange {stroke: #ff7f0e; stroke-width: 7px; fill: none;}
-      #color_green {stroke: #2ca02c; stroke-width: 7px; fill: none;}
-      #color_red {stroke: #d62728; stroke-width: 7px; fill: none;}
-      #color_none {stroke-width:0;}
-      #slideshow-text h2 {margin-top:10px; margin-bottom: 7px;}
-      .lines label {text-align:left; width:14em;}
-      .img_div {width:400px; float:left; padding:0 20px 20px 0;}
-      .img_attr {color:grey; text-align: right; width:400px; display: block; font-family: Verdana; font-size: smaller;}
+.link {
+  stroke: #999;
+  stroke-opacity: .6;
+}
 
-      .axis path,
-      .axis line {
-          fill: none;
-          stroke: black;
-          shape-rendering: crispEdges;
-      }
-      .axis text {
-          font-family: sans-serif;
-          font-size: 11px;
-      }
-    </style>
-  </head>
-  <body>
+</style>
+<body>
+<script>
 
-    <div id="svg-container"></div>
-    <div id="debug-container"></div>
+var width = 1000,
+    height = 1000;
 
-    <script>
-      var metro;
-      var ss;
-      function initData(callback) {
-      d3.xml("realRegionTest.graphml", function(doc) {
-      var nodetable = d3.map();
-      var nodes = [];
-      var links = [];
-      var format = d3.time.format("%d/%m/%Y");
+var color = d3.scale.category10();
 
-      d3.select(doc).selectAll("node").each(function () {
-      var e = d3.select(this);
-      var id = e.attr("id");
-      var sx = parseInt(e.select("data[key='x']").text()), sy = parseInt(e.select("data[key='y']").text());
-      var rawtitle = e.select("data[key='label']").text().trim();
-      var bits = rawtitle.split("\t");
-      var node = {
-        id: id,
-        label: bits[0].trim(),
-        date: format.parse(e.select("data[key='date']").text().trim()),
-        fixed: 0,
-        edges: d3.map(), // indexed by line
-      };
-      nodetable.set(id, node);
-      nodes.push(node);
-    });
+var force = d3.layout.force()
+    .charge(-200)
+    .linkDistance(function(d) { return 5*Math.pow(d.value, -1.5); })
+    .size([width, height]);
 
-    // parse out the various metro lines; we'll instantiate node later
-    var lines = [];
-    var linetable = d3.map();
-    d3.select(doc).selectAll("key")
-      .filter(function() {return d3.select(this).attr("for") == "edge"})
-      .each(function() {
-        var id = d3.select(this).attr("id");
-        var line = { id: id, nodes: [] };
-        linetable.set(id, line);
-        lines.push(line);
-      });
+var zoom = d3.behavior.zoom()
+    .scaleExtent([1, 10])
+    .on("zoom", zoomed);
 
-    // parse out the edges
-    d3.select(doc).selectAll("edge").each(function () {
-      var e = d3.select(this);
-      var n1 = nodetable.get(e.attr("source"));
-      var n2 = nodetable.get(e.attr("target"));
-      var l = {
-        id: e.attr("id"),
-        source: n1,
-        target: n2,
-        path: [],
-      };
+var svg = d3.select("body").append("svg")
+    .attr("width", width)
+    .attr("height", height)
+    .call(zoom);
 
-      e.selectAll("data").each(function() {
-        // XXX assuming that none of these are FALSE
-        var p = d3.select(this).attr("key");
-        l.path.push(linetable.get(p));
-        if (!n1.edges.has(p)) n1.edges.set(p, []);
-        if (!n2.edges.has(p)) n2.edges.set(p, []);
-        n1.edges.get(p).push(l);
-        n2.edges.get(p).push(l);
-      });
-      links.push(l);
-    });
+var g = svg.append("g");
 
-    // determine the initial stories
-    var initials = d3.map();
-    nodes.forEach(function(n) {
-      n.edges.forEach(function(k,v) {
-        var l = linetable.get(k);
-        if (v.length == 1 && !l.nodes.length) {
-          l.nodes.push(n);
-        }
-      });
-    });
+d3.json("test-graph.json", function(error, graph) {
+  force
+      .nodes(graph.nodes)
+      .links(graph.links)
+      .start();
 
-    // follow the trail (topological sort)
-    lines.forEach(function(l) {
-      var curNode = l.nodes[0];
-      var edges = curNode.edges.get(l.id);
-      var curEdge;
-      var first = true;
-      do {
-        curEdge = first ? edges[0] : edges[0] == curEdge ? edges[1] : edges[0];
-        first = false;
-        curNode = curEdge.source == curNode ? curEdge.target : curEdge.source;
-        l.nodes.push(curNode);
-        edges = curNode.edges.get(l.id);
-      } while (edges.length != 1);
-    });
-    metro
-      .lines(lines)
-      .nodes(nodes)
-      .links(links);
-    metro();
+  var link = g.selectAll(".link")
+      .data(graph.links)
+    .enter().append("line")
+      .attr("class", "link")
+      .style("stroke-width", function(d) { return Math.sqrt(d.value); });
+
+  var node = g.selectAll(".node")
+      .data(graph.nodes)
+    .enter().append("circle")
+      .attr("class", "node")
+      .attr("r", 5)
+      .style("fill", function(d) { return color(d.group); })
+      .call(force.drag);
+
+  node.append("title")
+      .text(function(d) { return d.name; });
+
+  force.on("tick", function() {
+    link.attr("x1", function(d) { return d.source.x; })
+        .attr("y1", function(d) { return d.source.y; })
+        .attr("x2", function(d) { return d.target.x; })
+        .attr("y2", function(d) { return d.target.y; });
+
+    node.attr("cx", function(d) { return d.x; })
+        .attr("cy", function(d) { return d.y; });
   });
+});
+
+function zoomed() {
+  g.style("stroke-width", 1.5 / d3.event.scale + "px");
+  g.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
 }
 
-//var debug = window.location.hash == "#debug";
+</script>
 
-metro = metromap(d3.select("#svg-container"), true)
-  .size([1000, 600]);
-
-function clear() {
-  localStorage.setItem("state", null);
-  initData();
-}
-
-ss = slideshow(metro);
-ss(d3.select("#slideshow-controls"), d3.select("#time-controls"), d3.select("#line-controls"), d3.select("#slideshow-text"));
-      
-clear();
-debugForce(metro, d3.select("#debug-container"));
-    </script>
   </body>
 </html>

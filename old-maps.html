@@ -85,8 +85,8 @@
     <script>
 var metro; // for easy console access
 var ss; //ditto
-function initData(callback) { //in debug case, THIS is where we get data! ~ats
-  d3.xml("realRegionTest.graphml", function(doc) { //so this graphml file is what we need to generate
+function initData(callback) {
+  d3.xml("realRegionTest.graphml", function(doc) {
     var nodetable = d3.map();
     var nodes = [];
     var links = [];

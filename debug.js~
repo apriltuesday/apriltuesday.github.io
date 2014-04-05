@@ -100,6 +100,13 @@ function debugForce(force, selection) {
       return f(-v);
     }
   }
+  // work around bug https://github.com/mbostock/d3/issues/895
+  function ap2(f) {
+    return function(v) {
+      if (!arguments.length) return f()();
+      return f(v);
+    }
+  }
 
   function round(f) {
     return function(v) {
@@ -111,8 +118,8 @@ function debugForce(force, selection) {
     [ {name: 'Charge',        min: 0, max: 600, step: 1,       f: neg(force.charge)},
       {name: 'Gravity',       min: 0, max: 0.3, step: 0.01,    f: force.gravity},
       {name: 'Friction',      min: 0, max: 1,   step: 0.01,    f: force.friction},
-      {name: 'Link strength', min: 0, max: 1,   step: 0.01,    f: force.linkStrength,  restart: true},
-      {name: 'Link distance', min: 0, max: 200,  step: 1,      f: force.linkDistance,  restart: true},
+      {name: 'Link strength', min: 0, max: 1,   step: 0.01,    f: ap2(force.linkStrength),  restart: true},
+      {name: 'Link distance', min: 0, max: 200,  step: 1,       f: ap2(force.linkDistance),  restart: true},
       {name: 'Alpha',         min: 0, max: 0.1, step: 0.00001, f: round(force.alpha),       skip: true, alpha: true},
       {name: 'Octoforce'    , min: 0, max: 1,   step: 0.001,   f: force.octoforce,          range: true},
       {name: 'Monoforce'    , min: 0, max: 1,   step: 0.001,   f: force.monoforce,          range: true},
