@@ -3,7 +3,9 @@ function social(container) {
 
     var width = 800,
 	height = 800;
-    var color = d3.scale.category10();
+    var color = d3.scale.ordinal()
+	.domain([0,1,2,3,4,5,6,7,8,9,10])
+	.range(["#333333", "#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd", "#8c564b", "#e377c2", "#7f7f7f", "#bcbd22", "#17becf"]);
 
     var force = d3.layout.force()
 	.charge(-200)
