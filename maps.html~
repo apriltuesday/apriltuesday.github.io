@@ -19,18 +19,6 @@
   stroke-opacity: .6;
 }
 
-.axis path,
-.axis line {
-  fill: none;
-  stroke: black;
-  shape-rendering: crispEdges;
-}
-
-.axis text {
-  font-family: sans-serif;
-  font-size: 11px;
-}
-
 </style>
 <body>
 
@@ -46,12 +34,8 @@
 
 <script>
 
-  var mapfile = "test-map.json";
-  var graphfile = "test-graph.json";
-  var featFile = "test-feats.json";
-
-  metro(mapfile, featFile, d3.select("#metro-map"));
-  social(graphfile, d3.select("#social-graph"));
+social(d3.select("#social-graph"));
+metro(d3.select("#metro-map"));
 
 </script>
 
