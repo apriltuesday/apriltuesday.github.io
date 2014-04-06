@@ -1,8 +1,8 @@
 // Metro map code
 function metro(filename, faces, dates, longs, lats, container) {
 
-    var width = 800,
-	height = 500,
+    var width = 1000,
+	height = 600,
 	padding = 10,
 	circlePadding = 5;
 
@@ -75,7 +75,7 @@ function metro(filename, faces, dates, longs, lats, container) {
 	    node.on("mouseover", function(d) {
 		    if (d) {
 			d3.select("#show-image")
-			    .html("<img style=\"max-width:400px;max-height:400px;\"" +
+			    .html("<img style=\"max-width:500px;max-height:500px;\"" +
 				  "src=\"images/" + d.id + ".png\" >");
 		    }
 		});
@@ -102,7 +102,7 @@ function metro(filename, faces, dates, longs, lats, container) {
 	    
 	    force.on("tick", function(e) {
 		    node.each(gravity(.2 * e.alpha))
-			.each(collide(.9))
+			.each(collide(0.9))
 			.attr("cx", function(d) { return d.x; })
 			.attr("cy", function(d) { return d.y = Math.max(padding, Math.min(height - padding, d.y)); });
 
