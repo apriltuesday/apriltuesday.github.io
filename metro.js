@@ -1,51 +1,58 @@
 // Metro map code
-function metro(filename, featureFilename, container) {
+function metro(filename, faces, dates, longs, lats, container) {
 
-    // TODO make these scales in a non-shitty manner
     var width = 800,
-	height = 400;
-    var color = d3.scale.ordinal()
-	.domain([1,2,3,4,5,6,7,8,9,10])
+	height = 500,
+	padding = 10,
+	circlePadding = 5;
+
+    // Scales; domains get set according to data in map
+    var color = d3.scale.ordinal() // TODO needs to corr. w/ social graph
 	.range(["#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd", "#8c564b", "#e377c2", "#7f7f7f", "#bcbd22", "#17becf"]);
+    var time = d3.time.scale()
+	.range([padding, width-padding]);
+    var yScale = d3.scale.ordinal()
+	.rangeBands([2*padding, height-padding]);
+
     var force = d3.layout.force()
 	.charge(-200)
 	.linkDistance(20)
 	.size([width, height]);
-    var time = d3.time.scale()
-	.range([0, width]); // domain gets set later
-    var yScale = d3.scale.ordinal()
-	.domain([1,2,3,4,5])
-	.range([70, 140, 210, 280, 350]);
 
     var svg = container.append("svg")
 	.attr("width", width)
 	.attr("height", height)
-	.on("click", function() { d3.select("#show-image").empty(); }); //TODO broken
-
-    // load features
-    var faces, dates, longs, lats;
-    d3.json(featureFilename, function(error, data) {
-	    if (error) console.warn(error);
-	    faces = data.faces;
-	    dates = [];
-	    for (var i = 0; i < data.dates.length; i++) {
-		dates.push(new Date(data.dates[i] * 1000)); //s->ms conversion
-	    }
-	    longs = data.longs;
-	    lats = data.lats;
-	    makeAxis();
-	});
+	.on("click", function() { d3.select("#show-image").html(""); });
 
     // make map
     d3.json(filename, function(error, graph) {
 	    if (error) console.warn(error);
 	    var g = svg.append("g");
-    
+
+	    // set domains
+	    var extent = d3.extent(graph.nodes, function(d) { return d.line; });
+	    var dom = [];
+	    for (var i = extent[0]; i <= extent[1]; i++)
+		dom.push(i);
+	    color.domain(dom);
+	    yScale.domain(dom);
+	    time.domain(d3.extent(graph.nodes, function(d) { return dates[d.id]; }));
+
+    // axis
+    var axis = d3.svg.axis().scale(time)
+	.orient("bottom")
+	.ticks(d3.time.years, 1)
+	.tickFormat(d3.time.format('%Y')); 
+    svg.append("g")
+	.attr("class", "axis")
+	.attr("transform", "translate(" + padding + ", " + (height-2*padding) + ")")
+	.call(axis);
+
 	    force
 		.nodes(graph.nodes)
 		.links(graph.links)
 		.start();
-
+	   
 	    var link = g.selectAll(".link")
 		.data(graph.links)
 		.enter().append("line")
@@ -66,45 +73,81 @@ function metro(filename, featureFilename, container) {
 		.text(function(d) { return d.id; });
 
 	    node.on("mouseover", function(d) {
-		    d3.select("#show-image").empty();
 		    if (d) {
 			d3.select("#show-image")
 			    .html("<img style=\"max-width:400px;max-height:400px;\"" +
 				  "src=\"images/" + d.id + ".png\" >");
 		    }
 		});
+
+	    // if date is Feb 2014, it's wrong
+	    // so change it to the latest correct date
+	    // XXX huge hack alert
+	    for (var x in force.nodes()) {
+		var theNode = force.nodes()[x];
+		var theDate = dates[theNode.id];
+		if (theDate.getFullYear() == 2014 && theDate.getMonth() == 1) {
+		    var maxDate = null;
+		    for (var y in force.nodes()) {
+			var otherNode = force.nodes()[y];
+			if (theNode.line == otherNode.line
+			    && theDate.getTime() > dates[otherNode.id].getTime()
+			    && dates[otherNode.id].getTime() > (maxDate == null ? 0 : maxDate.getTime()))
+				maxDate = dates[otherNode.id];
+		    }
+		    if (maxDate != null)
+			dates[theNode.id] = maxDate;
+		}
+	    }
 	    
-	    force.on("tick", function() {
-		    // position nodes horizontally according to date,
-		    // vertically according to line membership
-		    node.each(function(d) {
-			    var intended = time(dates[d.id]);
-			    d.x = d.px = Math.min(intended + 10, Math.max(intended - 10, d.px));
-			    intended = yScale(d.line);
-			    d.y = d.py = Math.min(intended + 30, Math.max(intended - 30, d.py));
-			});
+	    force.on("tick", function(e) {
+		    node.each(gravity(.2 * e.alpha))
+			.each(collide(.9))
+			.attr("cx", function(d) { return d.x; })
+			.attr("cy", function(d) { return d.y = Math.max(padding, Math.min(height - padding, d.y)); });
 
 		    link.attr("x1", function(d) { return d.source.x; })
 			.attr("y1", function(d) { return d.source.y; })
 			.attr("x2", function(d) { return d.target.x; })
 			.attr("y2", function(d) { return d.target.y; });
-
-		    node.attr("cx", function(d) { return d.x; })
-			.attr("cy", function(d) { return d.y; });
 		});
 	});
 
-    // axis -- TODO not showing up :(
-    function makeAxis() {
-	time.domain(d3.extent(force.nodes(), function(d) { return dates[d.id]; }))
-	var axis = d3.svg.axis().scale(time)
-	    .orient("bottom")
-	    .ticks(d3.time.years, 1)
-	    .tickFormat(d3.time.format('%Y')); 
-	svg.append("g")
-	    .attr("class", "axis")
-	    .attr("transform", "translate(0, " + height + ")")
-	    .call(axis);
+    // Move nodes toward cluster focus, separated vertically by line id
+    // and horizontally by time
+    function gravity(alpha) {
+	return function(d) {
+	    d.y += (yScale(d.line) - d.y) * alpha;
+	    d.x = time(dates[d.id]);
+	};
+    }
+
+    // Resolves collisions between d and all other circles.
+    function collide(alpha) {
+	var quadtree = d3.geom.quadtree(force.nodes());
+	return function(d) {
+	    var r = d.radius + padding,
+		nx1 = d.x - r,
+		nx2 = d.x + r,
+		ny1 = d.y - r,
+		ny2 = d.y + r;
+	    quadtree.visit(function(quad, x1, y1, x2, y2) {
+		    if (quad.point && (quad.point !== d)) {
+			var x = d.x - quad.point.x,
+			    y = d.y - quad.point.y,
+			    l = Math.sqrt(x * x + y * y),
+			    r = d.radius + quad.point.radius + circlePadding
+			if (l < r) {
+			    l = (l - r) / l * alpha;
+			    d.x -= x *= l;
+			    d.y -= y *= l;
+			    quad.point.x += x;
+			    quad.point.y += y;
+			}
+		    }
+		    return x1 > nx2 || x2 < nx1 || y1 > ny2 || y2 < ny1;
+		});
+	};
     }
 
 }

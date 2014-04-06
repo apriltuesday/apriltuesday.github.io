@@ -35,24 +35,43 @@
 <body>
 
   <table cellspacing="50">
-    <tr>
-      <td id="metro-map"></td>
-      <td id="show-image"></td>
-    </tr>
-    <tr>
-      <td id="social-graph"></td>
-    </tr>
   </table>
 
 <script>
 
-  var mapfile = "test-map.json";
-  var graphfile = "test-graph.json";
-  var featFile = "test-feats.json";
+  var mapfile = "large-map.json";
+  var graphfile = "large-graph.json";
+  var featFile = "large-feats.json";
 
-  metro(mapfile, featFile, d3.select("#metro-map"));
-  social(graphfile, d3.select("#social-graph"));
+  var faces, dates, longs, lats;
+  d3.json(featFile, function(error, data) {
+    if (error) console.warn(error);
 
+    // load features
+    faces = data.faces;
+    dates = [];
+    for (var i = 0; i < data.dates.length; i++) {
+      dates.push(new Date(data.dates[i] * 1000)); //s->ms conversion
+    }
+    longs = data.longs;
+    lats = data.lats;
+
+    // make table
+    var tab = d3.select("table");
+    var row = tab.append("tr");
+    row.append("td")
+      .attr("id", "metro-map");
+    row.append("td")
+      .attr("id", "show-image");
+    tab.append("tr")
+      .append("td")
+      .attr("id", "social-graph");
+
+    // add content
+    metro(mapfile, faces, dates, longs, lats, d3.select("#metro-map"));
+    social(graphfile, d3.select("#social-graph"));
+  });
+    
 </script>
 
   </body>
