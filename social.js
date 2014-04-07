@@ -2,8 +2,8 @@
 function social(filename, container) {
 
     var me = "April Shen";
-    var width = 800,
-	height = 500;
+    var width = 1000,
+	height = 1000;
     var color = d3.scale.ordinal()
 	.domain([0,1,2,3,4,5,6,7,8,9,10])
 	.range(["#333333", "#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd", "#8c564b", "#e377c2", "#7f7f7f", "#bcbd22", "#17becf"]);
@@ -25,7 +25,11 @@ function social(filename, container) {
     var g = svg.append("g");
 
     function zoomed() {
-	g.style("stroke-width", 1.5 / d3.event.scale + "px");
+	g.selectAll("circle")
+	    .style("stroke-width", 1.5 / d3.event.scale + "px")
+	    .attr("r", 5 / d3.event.scale + "px");
+	g.selectAll("line")
+	    .style("stroke-width", function(d) { return Math.sqrt(d.value) / d3.event.scale; });
 	g.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
     }
 

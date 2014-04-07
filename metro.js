@@ -4,7 +4,9 @@ function metro(filename, faces, dates, longs, lats, container) {
     var width = 1000,
 	height = 600,
 	padding = 10,
-	circlePadding = 5;
+	circlePadding = 5,
+	rad = 8, //radius of metro stop
+	wid = 10; //width of metro line
 
     // Scales; domains get set according to data in map
     var color = d3.scale.ordinal() // TODO needs to corr. w/ social graph
@@ -14,20 +16,34 @@ function metro(filename, faces, dates, longs, lats, container) {
     var yScale = d3.scale.ordinal()
 	.rangeBands([2*padding, height-padding]);
 
+    var axis; //init when we make the map
     var force = d3.layout.force()
 	.charge(-200)
-	.linkDistance(20)
+	.linkDistance(50)
 	.size([width, height]);
 
     var svg = container.append("svg")
 	.attr("width", width)
 	.attr("height", height)
 	.on("click", function() { d3.select("#show-image").html(""); });
+    var g = svg.append("g");
+
+    var zoom = d3.behavior.zoom()
+	.scaleExtent([1, 10])
+	.on("zoom", function() {
+		g.selectAll("circle")
+		  .attr("r", rad / d3.event.scale + "px")
+		  .style("stroke-width", 1.5 / d3.event.scale + "px");
+		g.selectAll("line")
+		  .style("stroke-width", wid / d3.event.scale + "px");
+		g.attr("transform", "translate(" + d3.event.translate + ")" +
+		       "scale(" + d3.event.scale + ")");
+	    });
+    svg.call(zoom); //TODO need to zoom axis also
 
     // make map
     d3.json(filename, function(error, graph) {
 	    if (error) console.warn(error);
-	    var g = svg.append("g");
 
 	    // set domains
 	    var extent = d3.extent(graph.nodes, function(d) { return d.line; });
@@ -36,36 +52,35 @@ function metro(filename, faces, dates, longs, lats, container) {
 		dom.push(i);
 	    color.domain(dom);
 	    yScale.domain(dom);
-	    time.domain(d3.extent(graph.nodes, function(d) { return dates[d.id]; }));
-
-    // axis
-    var axis = d3.svg.axis().scale(time)
-	.orient("bottom")
-	.ticks(d3.time.years, 1)
-	.tickFormat(d3.time.format('%Y')); 
-    svg.append("g")
-	.attr("class", "axis")
-	.attr("transform", "translate(" + padding + ", " + (height-2*padding) + ")")
-	.call(axis);
-
+	    
 	    force
 		.nodes(graph.nodes)
 		.links(graph.links)
 		.start();
+
+	    time.domain(d3.extent(force.nodes(), function(d) { return dates[d.id]; }));
+	    axis = d3.svg.axis().scale(time)
+		.orient("bottom")
+		.ticks(d3.time.years, 1)
+		.tickFormat(d3.time.format('%Y')); 
+	    svg.append("g")
+		.attr("class", "axis")
+		.attr("transform", "translate(" + padding + ", " + (height-2*padding) + ")")
+		.call(axis);
 	   
 	    var link = g.selectAll(".link")
 		.data(graph.links)
 		.enter().append("line")
 		.attr("class", "link")
 		.style("stroke", function(d) { return color(d.line); })
-		.style("stroke-width", 10)
+		.style("stroke-width", wid)
 		.style("stroke-opacity", 1);
 
 	    var node = g.selectAll(".node")
 		.data(graph.nodes)
 		.enter().append("circle")
 		.attr("class", "node")
-		.attr("r", 8)
+		.attr("r", rad)
 		.style("fill", "white")
 		.style("stroke", "black");
 
@@ -105,14 +120,14 @@ function metro(filename, faces, dates, longs, lats, container) {
 			.each(collide(0.9))
 			.attr("cx", function(d) { return d.x; })
 			.attr("cy", function(d) { return d.y = Math.max(padding, Math.min(height - padding, d.y)); });
-
+		    
 		    link.attr("x1", function(d) { return d.source.x; })
 			.attr("y1", function(d) { return d.source.y; })
 			.attr("x2", function(d) { return d.target.x; })
 			.attr("y2", function(d) { return d.target.y; });
 		});
 	});
-
+	
     // Move nodes toward cluster focus, separated vertically by line id
     // and horizontally by time
     function gravity(alpha) {
