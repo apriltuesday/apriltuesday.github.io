@@ -23,6 +23,7 @@
 .axis line {
   fill: none;
   stroke: black;
+  stroke-width: 1.5px;
   shape-rendering: crispEdges;
 }
 
@@ -62,10 +63,14 @@
     row.append("td")
       .attr("id", "metro-map");
     row.append("td")
-      .attr("id", "show-image");
-    tab.append("tr")
-      .append("td")
+      .attr("id", "show-image")
+      .style("width", 500 + "px");
+    row = tab.append("tr")
+    row.append("td")
       .attr("id", "social-graph");
+    row.append("td")
+      .attr("id", "show-names")
+      .style("width", 100 + "px");
 
     // add content
     metro(mapfile, faces, dates, longs, lats, d3.select("#metro-map"));

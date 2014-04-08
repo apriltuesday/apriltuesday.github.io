@@ -14,7 +14,7 @@ function metro(filename, faces, dates, longs, lats, container) {
     var time = d3.time.scale()
 	.range([padding, width-padding]);
     var yScale = d3.scale.ordinal()
-	.rangeBands([2*padding, height-padding]);
+	.rangeBands([2*padding, height-2*padding]);
 
     var axis; //init when we make the map
     var force = d3.layout.force()
@@ -57,7 +57,7 @@ function metro(filename, faces, dates, longs, lats, container) {
 		.nodes(graph.nodes)
 		.links(graph.links)
 		.start();
-
+	    
 	    time.domain(d3.extent(force.nodes(), function(d) { return dates[d.id]; }));
 	    axis = d3.svg.axis().scale(time)
 		.orient("bottom")
@@ -95,26 +95,6 @@ function metro(filename, faces, dates, longs, lats, container) {
 		    }
 		});
 
-	    // if date is Feb 2014, it's wrong
-	    // so change it to the latest correct date
-	    // XXX huge hack alert
-	    for (var x in force.nodes()) {
-		var theNode = force.nodes()[x];
-		var theDate = dates[theNode.id];
-		if (theDate.getFullYear() == 2014 && theDate.getMonth() == 1) {
-		    var maxDate = null;
-		    for (var y in force.nodes()) {
-			var otherNode = force.nodes()[y];
-			if (theNode.line == otherNode.line
-			    && theDate.getTime() > dates[otherNode.id].getTime()
-			    && dates[otherNode.id].getTime() > (maxDate == null ? 0 : maxDate.getTime()))
-				maxDate = dates[otherNode.id];
-		    }
-		    if (maxDate != null)
-			dates[theNode.id] = maxDate;
-		}
-	    }
-	    
 	    force.on("tick", function(e) {
 		    node.each(gravity(.2 * e.alpha))
 			.each(collide(0.9))

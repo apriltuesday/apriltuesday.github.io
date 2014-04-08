@@ -2,8 +2,8 @@
 function social(filename, container) {
 
     var me = "April Shen";
-    var width = 1000,
-	height = 1000;
+    var width = 800,
+	height = 800;
     var color = d3.scale.ordinal()
 	.domain([0,1,2,3,4,5,6,7,8,9,10])
 	.range(["#333333", "#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd", "#8c564b", "#e377c2", "#7f7f7f", "#bcbd22", "#17becf"]);
@@ -20,6 +20,7 @@ function social(filename, container) {
     var svg = container.append("svg")
 	.attr("width", width)
 	.attr("height", height)
+	.on("click", function() { d3.select("#show-image").html(""); })
 	.call(zoom);
 
     var g = svg.append("g");
@@ -52,17 +53,27 @@ function social(filename, container) {
 		.attr("r", 5)
 		.style("fill", function(d) { return color(d.group); })
 		.call(force.drag);
-	    /*
-	    node.filter(function(d) {return d.name == me;})
-		.attr("cx", width / 2.0)
-		.attr("cy", height / 2.0)
-		.attr("fixed", true);
-	    */ //TODO fix me
 
 	    node.append("title")
 		.text(function(d) { return d.name; });
 
-	    force.on("tick", function() {
+	    // create name strings to display groups
+	    var names = ["", "", "", "", "", "", "", "", "", ""]; //XXX
+	    for (var i in force.nodes()) {
+		var theNode = force.nodes()[i];
+		if (theNode.group > 0)
+		    names[theNode.group] += "<p>" + theNode.name + "</p>";
+	    }
+
+	    node.on("mouseover", function(d) {
+		    if (d) {
+			d3.select("#show-names")
+			    .html(names[d.group]);
+		    }
+		});
+
+	    force.on("tick", function(e) {
+		    node.each(gravity(.2 * e.alpha));
 		    link.attr("x1", function(d) { return d.source.x; })
 			.attr("y1", function(d) { return d.source.y; })
 			.attr("x2", function(d) { return d.target.x; })
@@ -73,4 +84,13 @@ function social(filename, container) {
 		});
 	});
 
+    // Draw ME towards center
+    function gravity(alpha) {
+	return function(d) {
+	    if (d.name == me) {
+		d.x = width / 2.0;
+		d.y = height / 2.0;
+	    }
+	};
+    }
 }
