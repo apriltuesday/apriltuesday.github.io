@@ -127,7 +127,7 @@ function metro(filename, color, faces, dates, longs, lats, container) {
     // and horizontally by time
     function gravity(alpha) {
 	return function(d) {
-	    //d.y += (yScale(d.line) - d.y) * alpha;
+	    d.y += (yScale(d.line) - d.y) * alpha;
 	    d.x = time(dates[d.id]);
 	};
     }
