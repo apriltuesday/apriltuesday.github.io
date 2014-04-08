@@ -1,12 +1,9 @@
 // Social graph code
-function social(filename, container) {
+function social(filename, color, container) {
 
     var me = "April Shen";
     var width = 800,
 	height = 800;
-    var color = d3.scale.ordinal()
-	.domain([0,1,2,3,4,5,6,7,8,9,10])
-	.range(["#333333", "#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd", "#8c564b", "#e377c2", "#7f7f7f", "#bcbd22", "#17becf"]);
 
     var force = d3.layout.force()
 	.charge(-200)
@@ -58,7 +55,9 @@ function social(filename, container) {
 		.text(function(d) { return d.name; });
 
 	    // create name strings to display groups
-	    var names = ["", "", "", "", "", "", "", "", "", ""]; //XXX
+	    var names = [];
+	    for (var c in color.domain())
+		names.push("");
 	    for (var i in force.nodes()) {
 		var theNode = force.nodes()[i];
 		if (theNode.group > 0)

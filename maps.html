@@ -40,9 +40,9 @@
 
 <script>
 
-  var mapfile = "large-map.json";
-  var graphfile = "large-graph.json";
-  var featFile = "large-feats.json";
+  var mapfile = "test-map.json";
+  var graphfile = "test-graph.json";
+  var featFile = "test-feats.json";
 
   var faces, dates, longs, lats;
   d3.json(featFile, function(error, data) {
@@ -72,9 +72,13 @@
       .attr("id", "show-names")
       .style("width", 100 + "px");
 
+    var color = d3.scale.ordinal()
+	.domain([0,1,2,3,4,5,6,7,8,9,10])
+	.range(["#000000", "#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd", "#8c564b", "#e377c2", "#7f7f7f", "#bcbd22", "#17becf"]);
+
     // add content
-    metro(mapfile, faces, dates, longs, lats, d3.select("#metro-map"));
-    social(graphfile, d3.select("#social-graph"));
+    metro(mapfile, color, faces, dates, longs, lats, d3.select("#metro-map"));
+    social(graphfile, color, d3.select("#social-graph"));
   });
     
 </script>

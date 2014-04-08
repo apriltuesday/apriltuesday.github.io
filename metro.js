@@ -1,5 +1,5 @@
 // Metro map code
-function metro(filename, faces, dates, longs, lats, container) {
+function metro(filename, color, faces, dates, longs, lats, container) {
 
     var width = 1000,
 	height = 600,
@@ -9,17 +9,16 @@ function metro(filename, faces, dates, longs, lats, container) {
 	wid = 10; //width of metro line
 
     // Scales; domains get set according to data in map
-    var color = d3.scale.ordinal() // TODO needs to corr. w/ social graph
-	.range(["#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd", "#8c564b", "#e377c2", "#7f7f7f", "#bcbd22", "#17becf"]);
     var time = d3.time.scale()
 	.range([padding, width-padding]);
     var yScale = d3.scale.ordinal()
+	.domain(color.domain())
 	.rangeBands([2*padding, height-2*padding]);
 
     var axis; //init when we make the map
     var force = d3.layout.force()
-	.charge(-200)
-	.linkDistance(50)
+	.charge(function(d) { return d.line == 0 ? -400 : -200; })
+	.linkDistance(function(d) { return d.line == 0 ? 100 : 50; })
 	.size([width, height]);
 
     var svg = container.append("svg")
@@ -35,9 +34,10 @@ function metro(filename, faces, dates, longs, lats, container) {
 		  .attr("r", rad / d3.event.scale + "px")
 		  .style("stroke-width", 1.5 / d3.event.scale + "px");
 		g.selectAll("line")
-		  .style("stroke-width", wid / d3.event.scale + "px");
+		  .style("stroke-width", function(d) { return (d.line == 0 ? wid / 2 / d3.event.scale : wid / d3.event.scale) + "px"; });
 		g.attr("transform", "translate(" + d3.event.translate + ")" +
 		       "scale(" + d3.event.scale + ")");
+		//		redrawAxis();
 	    });
     svg.call(zoom); //TODO need to zoom axis also
 
@@ -45,13 +45,13 @@ function metro(filename, faces, dates, longs, lats, container) {
     d3.json(filename, function(error, graph) {
 	    if (error) console.warn(error);
 
+	    /*
 	    // set domains
 	    var extent = d3.extent(graph.nodes, function(d) { return d.line; });
 	    var dom = [];
 	    for (var i = extent[0]; i <= extent[1]; i++)
-		dom.push(i);
-	    color.domain(dom);
-	    yScale.domain(dom);
+	        dom.push(i);
+	     */
 	    
 	    force
 		.nodes(graph.nodes)
@@ -75,6 +75,11 @@ function metro(filename, faces, dates, longs, lats, container) {
 		.style("stroke", function(d) { return color(d.line); })
 		.style("stroke-width", wid)
 		.style("stroke-opacity", 1);
+
+	    link.filter(function(d) { return d.line == 0; })
+		.style("stroke-width", wid/2)
+		.style("stroke-opacity", .6)
+		.style("stroke-dasharray", "4, 4");
 
 	    var node = g.selectAll(".node")
 		.data(graph.nodes)
@@ -100,19 +105,29 @@ function metro(filename, faces, dates, longs, lats, container) {
 			.each(collide(0.9))
 			.attr("cx", function(d) { return d.x; })
 			.attr("cy", function(d) { return d.y = Math.max(padding, Math.min(height - padding, d.y)); });
-		    
+
+		    // TODO links not colliding?
 		    link.attr("x1", function(d) { return d.source.x; })
 			.attr("y1", function(d) { return d.source.y; })
 			.attr("x2", function(d) { return d.target.x; })
 			.attr("y2", function(d) { return d.target.y; });
 		});
 	});
+
+    // Draw axis after a zoom
+    function redrawAxis() {
+	//	var visible = force.nodes().filter(function(d) {
+	//return d.x > padding && d.x < width-padding
+	//&& d.y > padding && d.y < height-padding; });
+	//	time.domain(d3.extent(visible, function(d) { return dates[d.id]; }));
+	svg.call(axis);
+    }
 	
     // Move nodes toward cluster focus, separated vertically by line id
     // and horizontally by time
     function gravity(alpha) {
 	return function(d) {
-	    d.y += (yScale(d.line) - d.y) * alpha;
+	    //d.y += (yScale(d.line) - d.y) * alpha;
 	    d.x = time(dates[d.id]);
 	};
     }
