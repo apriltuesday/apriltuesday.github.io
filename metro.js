@@ -17,29 +17,33 @@ function metro(filename, color, faces, dates, longs, lats, container) {
 
     var axis; //init when we make the map
     var force = d3.layout.force()
-	.charge(function(d) { return d.line == 0 ? -400 : -200; })
-	.linkDistance(function(d) { return d.line == 0 ? 100 : 50; })
+	.charge(-200)
+	.linkDistance(50)
+	.linkStrength(function(d) { return d.line == 0 ? 0.1 : 0.5; })
 	.size([width, height]);
 
     var svg = container.append("svg")
 	.attr("width", width)
 	.attr("height", height)
 	.on("click", function() { d3.select("#show-image").html(""); });
-    var g = svg.append("g");
 
     var zoom = d3.behavior.zoom()
 	.scaleExtent([1, 10])
-	.on("zoom", function() {
-		g.selectAll("circle")
-		  .attr("r", rad / d3.event.scale + "px")
-		  .style("stroke-width", 1.5 / d3.event.scale + "px");
-		g.selectAll("line")
-		  .style("stroke-width", function(d) { return (d.line == 0 ? wid / 2 / d3.event.scale : wid / d3.event.scale) + "px"; });
-		g.attr("transform", "translate(" + d3.event.translate + ")" +
-		       "scale(" + d3.event.scale + ")");
-		//		redrawAxis();
-	    });
+	.on("zoom", zoomed);
     svg.call(zoom); //TODO need to zoom axis also
+
+    var g = svg.append("g");
+    
+    function zoomed() {
+	g.selectAll("circle")
+	    .attr("r", rad / d3.event.scale + "px")
+	    .style("stroke-width", 1.5 / d3.event.scale + "px");
+	g.selectAll("line")
+	    .style("stroke-width", function(d) { return (d.line == 0 ? wid / 2 / d3.event.scale : wid / d3.event.scale) + "px"; });
+	g.attr("transform", "translate(" + d3.event.translate + ")" +
+	       "scale(" + d3.event.scale + ")");
+	//		redrawAxis();
+    }
 
     // make map
     d3.json(filename, function(error, graph) {
@@ -88,6 +92,7 @@ function metro(filename, color, faces, dates, longs, lats, container) {
 		.attr("r", rad)
 		.style("fill", "white")
 		.style("stroke", "black");
+		//		.call(force.drag);
 
 	    node.append("title")
 		.text(function(d) { return d.id; });
@@ -107,6 +112,7 @@ function metro(filename, color, faces, dates, longs, lats, container) {
 			.attr("cy", function(d) { return d.y = Math.max(padding, Math.min(height - padding, d.y)); });
 
 		    // TODO links not colliding?
+		    // one possibility: faking nodes
 		    link.attr("x1", function(d) { return d.source.x; })
 			.attr("y1", function(d) { return d.source.y; })
 			.attr("x2", function(d) { return d.target.x; })
@@ -116,10 +122,10 @@ function metro(filename, color, faces, dates, longs, lats, container) {
 
     // Draw axis after a zoom
     function redrawAxis() {
-	//	var visible = force.nodes().filter(function(d) {
-	//return d.x > padding && d.x < width-padding
-	//&& d.y > padding && d.y < height-padding; });
-	//	time.domain(d3.extent(visible, function(d) { return dates[d.id]; }));
+	var visible = force.nodes().filter(function(d) {
+		return d.x > padding && d.x < width-padding
+		&& d.y > padding && d.y < height-padding; });
+	time.domain(d3.extent(visible, function(d) { return dates[d.id]; }));
 	svg.call(axis);
     }
 	
