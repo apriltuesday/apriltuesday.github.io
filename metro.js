@@ -19,7 +19,7 @@ function metro(filename, color, faces, dates, longs, lats, container) {
     var force = d3.layout.force()
 	.charge(-200)
 	.linkDistance(50)
-	.linkStrength(function(d) { return d.line == 0 ? 0.1 : 0.5; })
+	.linkStrength(function(d) { return d.line == 0 ? 0.1 : 0.3; })
 	.size([width, height]);
 
     var svg = container.append("svg")
@@ -43,6 +43,10 @@ function metro(filename, color, faces, dates, longs, lats, container) {
 	g.attr("transform", "translate(" + d3.event.translate + ")" +
 	       "scale(" + d3.event.scale + ")");
 	//		redrawAxis();
+    }
+
+    function dragstart(d) {
+	d3.select(this).classed("fixed", d.fixed = true);
     }
 
     // make map
@@ -92,7 +96,6 @@ function metro(filename, color, faces, dates, longs, lats, container) {
 		.attr("r", rad)
 		.style("fill", "white")
 		.style("stroke", "black");
-		//		.call(force.drag);
 
 	    node.append("title")
 		.text(function(d) { return d.id; });
@@ -100,11 +103,16 @@ function metro(filename, color, faces, dates, longs, lats, container) {
 	    node.on("mouseover", function(d) {
 		    if (d) {
 			d3.select("#show-image")
-			    .html("<img style=\"max-width:500px;max-height:500px;\"" +
+			    .html("<img style=\"max-width:600px;max-height:600px;\"" +
 				  "src=\"images/" + d.id + ".png\" >");
 		    }
 		});
 
+	    var drag = force.drag()
+		.on("dragstart", dragstart);
+	    node.call(drag);
+		
+		      
 	    force.on("tick", function(e) {
 		    node.each(gravity(.2 * e.alpha))
 			.each(collide(0.9))
