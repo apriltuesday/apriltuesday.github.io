@@ -5,8 +5,8 @@ function metro(filename, color, faces, dates, longs, lats, container) {
 	height = 600,
 	padding = 10,
 	circlePadding = 5,
-	rad = 8, //radius of metro stop
-	wid = 10; //width of metro line
+	rad = 10, //radius of metro stop
+	wid = 20; //width of metro line
 
     // Scales; domains get set according to data in map
     var time = d3.time.scale()
@@ -17,8 +17,8 @@ function metro(filename, color, faces, dates, longs, lats, container) {
 
     var axis; //init when we make the map
     var force = d3.layout.force()
-	.charge(-200)
-	.linkDistance(50)
+	.charge(0)
+	//	.linkDistance(50)
 	.linkStrength(function(d) { return d.line == 0 ? 0.1 : 0.3; })
 	.size([width, height]);
 
@@ -52,14 +52,6 @@ function metro(filename, color, faces, dates, longs, lats, container) {
     // make map
     d3.json(filename, function(error, graph) {
 	    if (error) console.warn(error);
-
-	    /*
-	    // set domains
-	    var extent = d3.extent(graph.nodes, function(d) { return d.line; });
-	    var dom = [];
-	    for (var i = extent[0]; i <= extent[1]; i++)
-	        dom.push(i);
-	     */
 	    
 	    force
 		.nodes(graph.nodes)
@@ -94,8 +86,8 @@ function metro(filename, color, faces, dates, longs, lats, container) {
 		.enter().append("circle")
 		.attr("class", "node")
 		.attr("r", rad)
-		.style("fill", "white")
-		.style("stroke", "black");
+		//.style("stroke-opacity", 0)
+		.style("fill", function(d) { return color(d.line); });
 
 	    node.append("title")
 		.text(function(d) { return d.id; });
@@ -115,7 +107,7 @@ function metro(filename, color, faces, dates, longs, lats, container) {
 		      
 	    force.on("tick", function(e) {
 		    node.each(gravity(.2 * e.alpha))
-			.each(collide(0.9))
+			.each(collide(0.5))
 			.attr("cx", function(d) { return d.x; })
 			.attr("cy", function(d) { return d.y = Math.max(padding, Math.min(height - padding, d.y)); });
 
@@ -141,7 +133,7 @@ function metro(filename, color, faces, dates, longs, lats, container) {
     // and horizontally by time
     function gravity(alpha) {
 	return function(d) {
-	    d.y += (yScale(d.line) - d.y) * alpha;
+	    d.y = yScale(d.line); //(yScale(d.line) - d.y) * alpha;
 	    d.x = time(dates[d.id]);
 	};
     }
