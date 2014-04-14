@@ -1,5 +1,6 @@
 // Metro map code
 function metro(filename, color, faces, dates, longs, lats, container) {
+    // TODO: display zoom maps when you click
 
     var width = 1000,
 	height = 600,
