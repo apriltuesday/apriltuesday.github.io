@@ -1,6 +1,10 @@
 // Metro map code
-function metro(filename, color, faces, dates, longs, lats, container) {
+function metro(filename, color, container) {
     // TODO: display zoom maps when you click
+    // -fix timestamps (convert to JS Date...)
+    // -fix line layout
+    // -how many lines to show?
+    // -how much to zoom by?
 
     var width = 1000,
 	height = 600,
@@ -19,7 +23,6 @@ function metro(filename, color, faces, dates, longs, lats, container) {
     var axis; //init when we make the map
     var force = d3.layout.force()
 	.charge(0)
-	//	.linkDistance(50)
 	.linkStrength(function(d) { return d.line == 0 ? 0.1 : 0.3; })
 	.size([width, height]);
 
@@ -31,7 +34,7 @@ function metro(filename, color, faces, dates, longs, lats, container) {
     var zoom = d3.behavior.zoom()
 	.scaleExtent([1, 10])
 	.on("zoom", zoomed);
-    svg.call(zoom); //TODO need to zoom axis also
+    //    svg.call(zoom); //TODO need to zoom axis also
 
     var g = svg.append("g");
     
@@ -46,24 +49,25 @@ function metro(filename, color, faces, dates, longs, lats, container) {
 	//		redrawAxis();
     }
 
-    function dragstart(d) {
-	d3.select(this).classed("fixed", d.fixed = true);
-    }
-
     // make map
     d3.json(filename, function(error, graph) {
 	    if (error) console.warn(error);
+
+	    for (var i=0; i<graph.nodes.length; i++) {
+		var v = graph.nodes[i];
+		v.time = new Date(v.time * 1000); //s->ms conversion
+	    }
 	    
 	    force
 		.nodes(graph.nodes)
 		.links(graph.links)
 		.start();
 	    
-	    time.domain(d3.extent(force.nodes(), function(d) { return dates[d.id]; }));
+	    time.domain(d3.extent(force.nodes(), function(d) { return d.time; }));
 	    axis = d3.svg.axis().scale(time)
 		.orient("bottom")
 		.ticks(d3.time.years, 1)
-		.tickFormat(d3.time.format('%Y')); 
+		.tickFormat(d3.time.format('%Y'));  //%b?
 	    svg.append("g")
 		.attr("class", "axis")
 		.attr("transform", "translate(" + padding + ", " + (height-2*padding) + ")")
@@ -101,19 +105,28 @@ function metro(filename, color, faces, dates, longs, lats, container) {
 		    }
 		});
 
-	    var drag = force.drag()
-		.on("dragstart", dragstart);
-	    node.call(drag);
-		
-		      
+	    node.on("click", function(d) {
+		    if (d) {
+			var faces = d.faces; //only include faces in this photo
+			var longs = []; // don't restrict these (will happen in geo map)
+			var lats = [];
+
+			// Create a date window (including conversion to unix time)
+			var t = d.time.getTime() / 1000;
+			var MONTH = 2.63e6; // number of seconds in a month
+			var times = [t - 12*MONTH, t + 12*MONTH];
+
+			main.mapFromParams('zoom', faces, times, longs, lats);
+			// TODO now what???? reload?
+		    }
+		});
+
 	    force.on("tick", function(e) {
 		    node.each(gravity(.2 * e.alpha))
 			.each(collide(0.5))
 			.attr("cx", function(d) { return d.x; })
 			.attr("cy", function(d) { return d.y = Math.max(padding, Math.min(height - padding, d.y)); });
 
-		    // TODO links not colliding?
-		    // one possibility: faking nodes
 		    link.attr("x1", function(d) { return d.source.x; })
 			.attr("y1", function(d) { return d.source.y; })
 			.attr("x2", function(d) { return d.target.x; })
@@ -126,7 +139,7 @@ function metro(filename, color, faces, dates, longs, lats, container) {
 	var visible = force.nodes().filter(function(d) {
 		return d.x > padding && d.x < width-padding
 		&& d.y > padding && d.y < height-padding; });
-	time.domain(d3.extent(visible, function(d) { return dates[d.id]; }));
+	time.domain(d3.extent(visible, function(d) { return d.time; }));
 	svg.call(axis);
     }
 	
@@ -135,7 +148,7 @@ function metro(filename, color, faces, dates, longs, lats, container) {
     function gravity(alpha) {
 	return function(d) {
 	    d.y = yScale(d.line); //(yScale(d.line) - d.y) * alpha;
-	    d.x = time(dates[d.id]);
+	    d.x = time(d.time);
 	};
     }
 

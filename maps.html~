@@ -3,10 +3,14 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>Metro Maps for Photos</title>
+    <title>Metro Maps of Photos</title>
     <script type="text/javascript" src="d3.v3.js"></script>
     <script type="text/javascript" src="social.js"></script>
     <script type="text/javascript" src="metro.js"></script>
+    <script src="/pico/client.js"></script>
+    <script>
+      pico.load("main");
+    </script>
 <style>
 
 .node {
@@ -19,24 +23,61 @@
   stroke-opacity: .6;
 }
 
+.axis path,
+.axis line {
+  fill: none;
+  stroke: black;
+  stroke-width: 1.5px;
+  shape-rendering: crispEdges;
+}
+
+.axis text {
+  font-family: sans-serif;
+  font-size: 11px;
+}
+
 </style>
 <body>
 
-  <table>
-    <tr>
-      <td id="metro-map"></td>
-      <td id="show-image"></td>
-    </tr>
-    <tr>
-      <td id="social-graph"></td>
-    </tr>
+  <table cellspacing="10">
   </table>
 
 <script>
 
-social(d3.select("#social-graph"));
-metro(d3.select("#metro-map"));
+  var prefix = "zoom";
+  var mapfile = prefix + "-map.json";
+  var graphfile = prefix + "-graph.json";
+  var featFile = prefix + "-feats.json";
 
+  // make the initial map
+  // only do this if we don't already have one....
+//  main.mapFromParams(prefix, [], [], [], []);
+
+    // make table
+    var tab = d3.select("table");
+    var row = tab.append("tr");
+    row.append("td")
+      .attr("id", "metro-map");
+    row.append("td")
+      .attr("id", "show-image")
+      .style("width", 600 + "px");
+    row = tab.append("tr")
+    row.append("td")
+      .attr("id", "social-graph");
+    row.append("td")
+      .attr("id", "show-names")
+      .style("width", 100 + "px");
+
+    var color = d3.scale.ordinal()
+	.domain([0,1,2,3,4,5,6,7,8,9,10]) //,11,12,13,14,15,16,17,18,19,20])
+    //.range(["#000000", "#1f77b4", "#aec7e8", "#ff7f0e", "#ffbb78", "#2ca02c", "#98df8a", "#d62728", "#ff9896", "#9467bd", "#c5b0d5", "#8c564b", "#c49c94", "#e377c2", "#f7b6d2", "#7f7f7f", "#c7c7c7", "#bcbd22", "#dbdb8d", "#17becf", "#9edae5"]);
+	.range(["#000000", "#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd", "#8c564b", "#e377c2", "#7f7f7f", "#bcbd22", "#17becf"]);
+
+    // add content
+//    metro(mapfile, color, faces, dates, longs, lats, d3.select("#metro-map"));
+    metro(mapfile, color, d3.select("#metro-map"));
+    social(graphfile, color, d3.select("#social-graph"));
+    
 </script>
 
   </body>

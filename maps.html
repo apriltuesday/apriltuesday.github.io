@@ -7,6 +7,10 @@
     <script type="text/javascript" src="d3.v3.js"></script>
     <script type="text/javascript" src="social.js"></script>
     <script type="text/javascript" src="metro.js"></script>
+    <script src="/pico/client.js"></script>
+    <script>
+      pico.load("main");
+    </script>
 <style>
 
 .node {
@@ -45,18 +49,9 @@
   var graphfile = prefix + "-graph.json";
   var featFile = prefix + "-feats.json";
 
-  var faces, dates, longs, lats;
-  d3.json(featFile, function(error, data) {
-    if (error) console.warn(error);
-
-    // load features
-    faces = data.faces;
-    dates = [];
-    for (var i = 0; i < data.dates.length; i++) {
-      dates.push(new Date(data.dates[i] * 1000)); //s->ms conversion
-    }
-    longs = data.longs;
-    lats = data.lats;
+  // make the initial map
+  // only do this if we don't already have one....
+//  main.mapFromParams(prefix, [], [], [], []);
 
     // make table
     var tab = d3.select("table");
@@ -79,9 +74,9 @@
 	.range(["#000000", "#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd", "#8c564b", "#e377c2", "#7f7f7f", "#bcbd22", "#17becf"]);
 
     // add content
-    metro(mapfile, color, faces, dates, longs, lats, d3.select("#metro-map"));
+//    metro(mapfile, color, faces, dates, longs, lats, d3.select("#metro-map"));
+    metro(mapfile, color, d3.select("#metro-map"));
     social(graphfile, color, d3.select("#social-graph"));
-  });
     
 </script>
 
