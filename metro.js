@@ -34,7 +34,7 @@ function metro(filename, color, container) {
     var zoom = d3.behavior.zoom()
 	.scaleExtent([1, 10])
 	.on("zoom", zoomed);
-    //    svg.call(zoom); //TODO need to zoom axis also
+    svg.call(zoom); //TODO need to zoom axis also
 
     var g = svg.append("g");
     
