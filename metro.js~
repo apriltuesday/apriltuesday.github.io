@@ -34,7 +34,7 @@ function metro(filename, color, container) {
     var zoom = d3.behavior.zoom()
 	.scaleExtent([1, 10])
 	.on("zoom", zoomed);
-    //    svg.call(zoom); //TODO need to zoom axis also
+    svg.call(zoom); //TODO need to zoom axis also
 
     var g = svg.append("g");
     
@@ -49,13 +49,14 @@ function metro(filename, color, container) {
 	//		redrawAxis();
     }
 
-    function dragstart(d) {
-	d3.select(this).classed("fixed", d.fixed = true);
-    }
-
     // make map
     d3.json(filename, function(error, graph) {
 	    if (error) console.warn(error);
+
+	    for (var i=0; i<graph.nodes.length; i++) {
+		var v = graph.nodes[i];
+		v.time = new Date(v.time * 1000); //s->ms conversion
+	    }
 	    
 	    force
 		.nodes(graph.nodes)
@@ -66,7 +67,7 @@ function metro(filename, color, container) {
 	    axis = d3.svg.axis().scale(time)
 		.orient("bottom")
 		.ticks(d3.time.years, 1)
-		.tickFormat(d3.time.format('%Y')); 
+		.tickFormat(d3.time.format('%Y'));  //%b?
 	    svg.append("g")
 		.attr("class", "axis")
 		.attr("transform", "translate(" + padding + ", " + (height-2*padding) + ")")
@@ -88,7 +89,6 @@ function metro(filename, color, container) {
 	    var node = g.selectAll(".node")
 		.data(graph.nodes)
 		.enter().append("circle")
-		.each(function(d) { d.time = new Date(d.time * 1000); }) //s->ms conversion XXX
 		.attr("class", "node")
 		.attr("r", rad)
 		//.style("stroke-opacity", 0)
@@ -108,27 +108,25 @@ function metro(filename, color, container) {
 	    node.on("click", function(d) {
 		    if (d) {
 			var faces = d.faces; //only include faces in this photo
-			var times = [d.time - 1e7, d.time + 1e7]; //XXX wtf to put here
-			// this will be less stupid once we convert to Date...........
 			var longs = []; // don't restrict these (will happen in geo map)
 			var lats = [];
+
+			// Create a date window (including conversion to unix time)
+			var t = d.time.getTime() / 1000;
+			var MONTH = 2.63e6; // number of seconds in a month
+			var times = [t - 12*MONTH, t + 12*MONTH];
+
 			main.mapFromParams('zoom', faces, times, longs, lats);
 			// TODO now what???? reload?
 		    }
 		});
 
-	    /*var drag = force.drag()
-		.on("dragstart", dragstart);
-		node.call(drag);*/
-		
 	    force.on("tick", function(e) {
 		    node.each(gravity(.2 * e.alpha))
 			.each(collide(0.5))
 			.attr("cx", function(d) { return d.x; })
 			.attr("cy", function(d) { return d.y = Math.max(padding, Math.min(height - padding, d.y)); });
 
-		    // TODO links not colliding?
-		    // one possibility: faking nodes
 		    link.attr("x1", function(d) { return d.source.x; })
 			.attr("y1", function(d) { return d.source.y; })
 			.attr("x2", function(d) { return d.target.x; })

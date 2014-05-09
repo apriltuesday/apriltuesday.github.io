@@ -44,7 +44,7 @@
 
 <script>
 
-  var prefix = "zoom";
+  var prefix = "test";
   var mapfile = prefix + "-map.json";
   var graphfile = prefix + "-graph.json";
   var featFile = prefix + "-feats.json";
