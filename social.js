@@ -1,9 +1,9 @@
 // Social graph code
-function social(filename, color, container) {
+function social(filename, index, size, color, container) {
 
     var me = "April Shen";
-    var width = 800,
-	height = 800;
+    var width = 200,
+	height = 200;
 
     var force = d3.layout.force()
 	.charge(-200)
@@ -48,7 +48,7 @@ function social(filename, color, container) {
 		.enter().append("circle")
 		.attr("class", "node")
 		.attr("r", 5)
-		.style("fill", function(d) { return color(d.group); })
+		.style("fill", function(d) { return color(d.group[0]); })
 		.call(force.drag);
 
 	    node.append("title")
@@ -60,14 +60,14 @@ function social(filename, color, container) {
 		names.push("");
 	    for (var i in force.nodes()) {
 		var theNode = force.nodes()[i];
-		if (theNode.group > 0)
-		    names[theNode.group] += "<p>" + theNode.name + "</p>";
+		for (var j in theNode.group)
+		    names[theNode.group[j]] += "<p>" + theNode.name + "</p>";
 	    }
 
 	    node.on("mouseover", function(d) {
 		    if (d) {
-			d3.select("#show-names")
-			    .html(names[d.group]);
+			d3.select("#show-names" + index)
+			    .html(names[d.group[0]]);
 		    }
 		});
 
