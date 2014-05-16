@@ -23,7 +23,7 @@ function metro(filename, color, container) {
     var axis; //init when we make the map
     var force = d3.layout.force()
 	.charge(0)
-	.linkStrength(function(d) { return d.line == 0 ? 0.1 : 0.3; })
+	.linkStrength(0.3)
 	.size([width, height]);
 
     var svg = container.append("svg")
@@ -43,7 +43,7 @@ function metro(filename, color, container) {
 	    .attr("r", rad / d3.event.scale + "px")
 	    .style("stroke-width", 1.5 / d3.event.scale + "px");
 	g.selectAll("line")
-	    .style("stroke-width", function(d) { return (d.line == 0 ? wid / 2 / d3.event.scale : wid / d3.event.scale) + "px"; });
+	    .style("stroke-width", wid / d3.event.scale + "px");
 	g.attr("transform", "translate(" + d3.event.translate + ")" +
 	       "scale(" + d3.event.scale + ")");
 	//		redrawAxis();
@@ -77,14 +77,9 @@ function metro(filename, color, container) {
 		.data(graph.links)
 		.enter().append("line")
 		.attr("class", "link")
-		.style("stroke", function(d) { return color(d.line); })
+		.style("stroke", function(d) { return color(d.line); }) //TODO overlapping clusters
 		.style("stroke-width", wid)
 		.style("stroke-opacity", 1);
-
-	    link.filter(function(d) { return d.line == 0; })
-		.style("stroke-width", wid/2)
-		.style("stroke-opacity", .6)
-		.style("stroke-dasharray", "4, 4");
 
 	    var node = g.selectAll(".node")
 		.data(graph.nodes)
@@ -92,7 +87,7 @@ function metro(filename, color, container) {
 		.attr("class", "node")
 		.attr("r", rad)
 		//.style("stroke-opacity", 0)
-		.style("fill", function(d) { return color(d.line); });
+		.style("fill", function(d) { return color(d.line[0]); });
 
 	    node.append("title")
 		.text(function(d) { return d.id; });
@@ -116,7 +111,7 @@ function metro(filename, color, container) {
 			var MONTH = 2.63e6; // number of seconds in a month
 			var times = [t - 12*MONTH, t + 12*MONTH];
 
-			main.mapFromParams('zoom', faces, times, longs, lats);
+			//main.mapFromParams('zoom', faces, times, longs, lats);
 			// TODO now what???? reload?
 		    }
 		});
@@ -147,7 +142,7 @@ function metro(filename, color, container) {
     // and horizontally by time
     function gravity(alpha) {
 	return function(d) {
-	    d.y = yScale(d.line); //(yScale(d.line) - d.y) * alpha;
+	    d.y = yScale(d.line[0]); //(yScale(d.line) - d.y) * alpha;
 	    d.x = time(d.time);
 	};
     }

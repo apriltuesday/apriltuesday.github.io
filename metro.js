@@ -8,10 +8,10 @@ function metro(filename, color, container) {
 
     var width = 1000,
 	height = 600,
-	padding = 10,
-	circlePadding = 5,
-	rad = 10, //radius of metro stop
-	wid = 20; //width of metro line
+	padding = 20,
+	circlePadding = 20,
+	rad = 5, //radius of metro stop
+	wid = 10; //width of metro line
 
     // Scales; domains get set according to data in map
     var time = d3.time.scale()
@@ -22,7 +22,8 @@ function metro(filename, color, container) {
 
     var axis; //init when we make the map
     var force = d3.layout.force()
-	.charge(0)
+	.charge(-100)
+	.friction(0.5)
 	.linkStrength(0.3)
 	.size([width, height]);
 
@@ -56,12 +57,15 @@ function metro(filename, color, container) {
 	    for (var i=0; i<graph.nodes.length; i++) {
 		var v = graph.nodes[i];
 		v.time = new Date(v.time * 1000); //s->ms conversion
+		if (v.time.getFullYear() < 2000)
+		    v.time.setFullYear(2010); //something random
 	    }
 	    
 	    force
 		.nodes(graph.nodes)
 		.links(graph.links)
 		.start();
+	    force.links().reverse(); //need to draw in reverse order...
 	    
 	    time.domain(d3.extent(force.nodes(), function(d) { return d.time; }));
 	    axis = d3.svg.axis().scale(time)
@@ -74,20 +78,20 @@ function metro(filename, color, container) {
 		.call(axis);
 	   
 	    var link = g.selectAll(".link")
-		.data(graph.links)
+		.data(force.links())
 		.enter().append("line")
 		.attr("class", "link")
-		.style("stroke", function(d) { return color(d.line); }) //TODO overlapping clusters
+		.style("stroke", function(d) { return d.line<=10 ? color(d.line) : "#CCCCCC"; }) //TODO overlapping clusters
 		.style("stroke-width", wid)
-		.style("stroke-opacity", 1);
+		.style("stroke-opacity", function(d) {return d.line<=10? 1:0.7;});
 
 	    var node = g.selectAll(".node")
-		.data(graph.nodes)
+		.data(force.nodes())
 		.enter().append("circle")
 		.attr("class", "node")
 		.attr("r", rad)
-		//.style("stroke-opacity", 0)
-		.style("fill", function(d) { return color(d.line[0]); });
+		.style("opacity", function(d) {return d.line[0]<=10? 1:0.7;})
+		.style("fill", function(d) { return d.line[0]<=10 ? color(d.line[0]) : "#CCCCCC"; });
 
 	    node.append("title")
 		.text(function(d) { return d.id; });
@@ -117,7 +121,7 @@ function metro(filename, color, container) {
 		});
 
 	    force.on("tick", function(e) {
-		    node.each(gravity(.2 * e.alpha))
+		    node.each(gravity(e.alpha))
 			.each(collide(0.5))
 			.attr("cx", function(d) { return d.x; })
 			.attr("cy", function(d) { return d.y = Math.max(padding, Math.min(height - padding, d.y)); });
@@ -142,8 +146,9 @@ function metro(filename, color, container) {
     // and horizontally by time
     function gravity(alpha) {
 	return function(d) {
-	    d.y = yScale(d.line[0]); //(yScale(d.line) - d.y) * alpha;
-	    d.x = time(d.time);
+	    if (d.line[0] <= 10)
+	    	d.y += (yScale(d.line[0]) - d.y) * alpha; //yScale(d.line[0]);
+	    d.x += (time(d.time) - d.x) * alpha;
 	};
     }
 

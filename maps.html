@@ -44,10 +44,9 @@
 
 <script>
 
-  var prefix = "newestTest";
+  var prefix = "5-15-14_other";
   var mapfile = prefix + "-map.json";
   var graphfile = prefix + "-graph.json";
-  var featFile = prefix + "-feats.json";
 
   // make the initial map
   // only do this if we don't already have one....
@@ -69,12 +68,11 @@
       .style("width", 100 + "px");
 
     var color = d3.scale.ordinal()
-	.domain([0,1,2,3,4,5,6,7,8,9,10]) //,11,12,13,14,15,16,17,18,19,20])
+	.domain([1,2,3,4,5,6,7,8,9,10])
     //.range(["#000000", "#1f77b4", "#aec7e8", "#ff7f0e", "#ffbb78", "#2ca02c", "#98df8a", "#d62728", "#ff9896", "#9467bd", "#c5b0d5", "#8c564b", "#c49c94", "#e377c2", "#f7b6d2", "#7f7f7f", "#c7c7c7", "#bcbd22", "#dbdb8d", "#17becf", "#9edae5"]);
-	.range(["#000000", "#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd", "#8c564b", "#e377c2", "#7f7f7f", "#bcbd22", "#17becf"]);
+	.range(["#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd", "#8c564b", "#e377c2", "#7f7f7f", "#bcbd22", "#17becf"]);
 
     // add content
-//    metro(mapfile, color, faces, dates, longs, lats, d3.select("#metro-map"));
     metro(mapfile, color, d3.select("#metro-map"));
     social(graphfile, color, d3.select("#social-graph"));
     
