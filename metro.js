@@ -12,13 +12,17 @@ function metro(filename, color, container) {
 	circlePadding = 20,
 	rad = 5, //radius of metro stop
 	wid = 10; //width of metro line
-    var numLines = 20;
+    var numLines = 50;
+    var numPlaces = 200;
+    var domain = [];
+    for (var i = 0; i < 50; i++)
+	domain.push(i);
 
     // Scales; domains get set according to data in map
     var time = d3.time.scale()
 	.range([2*padding, width-2*padding]);
     var yScale = d3.scale.ordinal()
-	.domain(color.domain())
+	.domain(domain) //color.domain())
 	.rangeBands([2*padding, height-2*padding]);
 
     var axis; //init when we make the map
@@ -147,8 +151,13 @@ function metro(filename, color, container) {
     // and horizontally by time
     function gravity(alpha) {
 	return function(d) {
-	    if (d.line[0] <= numLines)
-	    	d.y += (yScale(d.line[0]) - d.y) * alpha; //yScale(d.line[0]);
+	    /*if (d.place != -1) {
+		d.y += (yScale(d.place) - d.y) * alpha;
+		console.log(d.id);
+	    }
+	    else*/ if (d.line[0] <= numLines)
+		d.y += (yScale(d.line[0]) - d.y) * alpha;
+
 	    d.x += (time(d.time) - d.x) * alpha;
 	};
     }
