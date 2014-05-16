@@ -6,16 +6,17 @@ function metro(filename, color, container) {
     // -how many lines to show?
     // -how much to zoom by?
 
-    var width = 1000,
-	height = 600,
+    var width = 1500,
+	height = 1000,
 	padding = 20,
 	circlePadding = 20,
 	rad = 5, //radius of metro stop
 	wid = 10; //width of metro line
+    var numLines = 20;
 
     // Scales; domains get set according to data in map
     var time = d3.time.scale()
-	.range([padding, width-padding]);
+	.range([2*padding, width-2*padding]);
     var yScale = d3.scale.ordinal()
 	.domain(color.domain())
 	.rangeBands([2*padding, height-2*padding]);
@@ -81,17 +82,17 @@ function metro(filename, color, container) {
 		.data(force.links())
 		.enter().append("line")
 		.attr("class", "link")
-		.style("stroke", function(d) { return d.line<=10 ? color(d.line) : "#CCCCCC"; }) //TODO overlapping clusters
+		.style("stroke", function(d) { return d.line<=numLines ? color(d.line) : "#CCCCCC"; }) //TODO overlapping clusters
 		.style("stroke-width", wid)
-		.style("stroke-opacity", function(d) {return d.line<=10? 1:0.7;});
+		.style("stroke-opacity", function(d) {return d.line<=numLines? 1:0.7;});
 
 	    var node = g.selectAll(".node")
 		.data(force.nodes())
 		.enter().append("circle")
 		.attr("class", "node")
 		.attr("r", rad)
-		.style("opacity", function(d) {return d.line[0]<=10? 1:0.7;})
-		.style("fill", function(d) { return d.line[0]<=10 ? color(d.line[0]) : "#CCCCCC"; });
+		.style("opacity", function(d) {return d.line[0]<=numLines? 1:0.7;})
+		.style("fill", function(d) { return d.line[0]<=numLines ? color(d.line[0]) : "#CCCCCC"; });
 
 	    node.append("title")
 		.text(function(d) { return d.id; });
@@ -124,7 +125,7 @@ function metro(filename, color, container) {
 		    node.each(gravity(e.alpha))
 			.each(collide(0.5))
 			.attr("cx", function(d) { return d.x; })
-			.attr("cy", function(d) { return d.y = Math.max(padding, Math.min(height - padding, d.y)); });
+			.attr("cy", function(d) { return d.y = Math.max(2*padding, Math.min(height - 2*padding, d.y)); });
 
 		    link.attr("x1", function(d) { return d.source.x; })
 			.attr("y1", function(d) { return d.source.y; })
@@ -146,7 +147,7 @@ function metro(filename, color, container) {
     // and horizontally by time
     function gravity(alpha) {
 	return function(d) {
-	    if (d.line[0] <= 10)
+	    if (d.line[0] <= numLines)
 	    	d.y += (yScale(d.line[0]) - d.y) * alpha; //yScale(d.line[0]);
 	    d.x += (time(d.time) - d.x) * alpha;
 	};
