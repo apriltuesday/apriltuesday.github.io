@@ -15,7 +15,7 @@ function metro(filename, color, container) {
     var numLines = 50;
     var numPlaces = 200;
     var domain = [];
-    for (var i = 0; i < 50; i++)
+    for (var i = 0; i < numLines; i++)
 	domain.push(i);
 
     // Scales; domains get set according to data in map
