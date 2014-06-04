@@ -1,10 +1,5 @@
 // Metro map code
 function metro(filename, color, container) {
-    // TODO: display zoom maps when you click
-    // -fix timestamps (convert to JS Date...)
-    // -fix line layout
-    // -how many lines to show?
-    // -how much to zoom by?
 
     var width = 1500,
 	height = 1000,
@@ -12,7 +7,7 @@ function metro(filename, color, container) {
 	circlePadding = 20,
 	rad = 5, //radius of metro stop
 	wid = 10; //width of metro line
-    var numLines = 50;
+    var numLines = 20;
     var numPlaces = 200;
     var domain = [];
     for (var i = 0; i < numLines; i++)
@@ -24,12 +19,21 @@ function metro(filename, color, container) {
     var yScale = d3.scale.ordinal()
 	.domain(domain) //color.domain())
 	.rangeBands([2*padding, height-2*padding]);
+    // Current "center of gravity" on y-axis for each line
+    // This gets re-evaluated on each tick
+    var centers = [];
+    var counts = []; //number of nodes in each bin
+    for (var i = 0; i< numLines; i++) {
+	centers.push(yScale(i));
+	counts.push(0);
+    }
+
 
     var axis; //init when we make the map
     var force = d3.layout.force()
 	.charge(-100)
 	.friction(0.5)
-	.linkStrength(0.3)
+	//	.linkStrength(0.3)
 	.size([width, height]);
 
     var svg = container.append("svg")
@@ -68,8 +72,7 @@ function metro(filename, color, container) {
 	    
 	    force
 		.nodes(graph.nodes)
-		.links(graph.links)
-		.start();
+		.links(graph.links);
 	    force.links().reverse(); //need to draw in reverse order...
 	    
 	    time.domain(d3.extent(force.nodes(), function(d) { return d.time; }));
@@ -81,6 +84,13 @@ function metro(filename, color, container) {
 		.attr("class", "axis")
 		.attr("transform", "translate(" + padding + ", " + (height-2*padding) + ")")
 		.call(axis);
+
+	    // Initialize positions
+	    force.nodes().forEach(function(d, i) {
+		    d.y = yScale(d.line[0]);
+		    counts[d.line[0]-1]++;
+		});
+	    force.start();
 	   
 	    var link = g.selectAll(".link")
 		.data(force.links())
@@ -108,7 +118,7 @@ function metro(filename, color, container) {
 				  "src=\"images/" + d.id + ".png\" >");
 		    }
 		});
-
+	    /*
 	    node.on("click", function(d) {
 		    if (d) {
 			var faces = d.faces; //only include faces in this photo
@@ -124,10 +134,12 @@ function metro(filename, color, container) {
 			// TODO now what???? reload?
 		    }
 		});
-
+	    */
 	    force.on("tick", function(e) {
+		    // TODO recompute centers
 		    node.each(gravity(e.alpha))
 			.each(collide(0.5))
+			//			.each(function(d) {d.py
 			.attr("cx", function(d) { return d.x; })
 			.attr("cy", function(d) { return d.y = Math.max(2*padding, Math.min(height - 2*padding, d.y)); });
 
@@ -151,14 +163,10 @@ function metro(filename, color, container) {
     // and horizontally by time
     function gravity(alpha) {
 	return function(d) {
-	    /*if (d.place != -1) {
-		d.y += (yScale(d.place) - d.y) * alpha;
-		console.log(d.id);
-	    }
-	    else*/ if (d.line[0] <= numLines)
-		d.y += (yScale(d.line[0]) - d.y) * alpha;
-
+	    //d.y += (centers[d.line[0]] - d.y) * alpha;
+	    d.y = yScale(d.line[0]);	    
 	    d.x += (time(d.time) - d.x) * alpha;
+	    //d.x = time(d.time);
 	};
     }
 

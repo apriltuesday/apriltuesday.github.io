@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <title>Social Graphs of Photos</title>
     <script type="text/javascript" src="d3.v3.js"></script>
-    <script type="text/javascript" src="social.js"></script>
+    <script type="text/javascript" src="social-map.js"></script>
     <script type="text/javascript" src="metro.js"></script>
     <script src="/pico/client.js"></script>
 <!--    <script>
@@ -44,28 +44,23 @@
 
 <script>
 
-  var numTimes = 10;
+  var prefix = "6-3-14_new"; //"newTest"; //
+  var numTimes = 26; //11; //7;
 
-  var color = d3.scale.ordinal()
-    .domain([/*0,*/1,2,3,4,5,6,7,8,9,10])
-    .range([/*"#000000",*/ "#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd", "#8c564b", "#e377c2", "#7f7f7f", "#bcbd22", "#17becf"]);
+  var color = d3.scale.category10();
 
     // make table
     var tab = d3.select("table");
     var graphs = tab.append("tr");
     var names = tab.append("tr");
 
-    
-  for (var i = 0; i < numTimes; i++) {
-    var graphfile = "newTest" + i + "-graph.json";
     graphs.append("td")
-      .attr("id", "social-graph" + i);
+      .attr("id", "social-graph");
     names.append("td")
-      .attr("id", "show-names" + i);
+      .attr("id", "show-names");
 
     // add content
-    social(graphfile, i, 200, color, d3.select("#social-graph" + i));
-}
+    socialMap(prefix, numTimes, 200, color, d3.select("#social-graph"));
     
 </script>
 

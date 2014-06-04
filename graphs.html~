@@ -3,9 +3,9 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>Social Face Graphs</title>
+    <title>Social Graphs of Photos</title>
     <script type="text/javascript" src="d3.v3.js"></script>
-    <script type="text/javascript" src="social-faces.js"></script>
+    <script type="text/javascript" src="social.js"></script>
     <script type="text/javascript" src="metro.js"></script>
     <script src="/pico/client.js"></script>
 <!--    <script>
@@ -55,16 +55,16 @@
     var graphs = tab.append("tr");
     var names = tab.append("tr");
 
-//  var i = 5;
+    
   for (var i = 0; i < numTimes; i++) {
-    var graphfile = "5-12-14_test" + i + "-graph.json";
+    var graphfile = "newTest" + i + "-graph.json";
     graphs.append("td")
       .attr("id", "social-graph" + i);
     names.append("td")
       .attr("id", "show-names" + i);
 
     // add content
-    social(graphfile, i, 800, color, d3.select("#social-graph" + i));
+    social(graphfile, i, 200, color, d3.select("#social-graph" + i));
 }
     
 </script>
