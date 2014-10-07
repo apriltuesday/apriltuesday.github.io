@@ -1,0 +1,42 @@
+<!-- Braid game by April Shen -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Words and Braids</title>
+    <script type="text/javascript" src="d3.v3.js"></script>
+    <script type="text/javascript" src="braids.js"></script>
+    <script src="/pico/client.js"></script>
+<!--    <script> for running python!
+      pico.load("main");
+    </script> -->
+<style>
+
+</style>
+<body>
+
+  <table cellspacing="10">
+  </table>
+
+<script>
+  main.mapFromParams(prefix, [], [], [], []);
+
+  // make table
+  var tab = d3.select("table");
+  var row = tab.append("tr");
+  row.append("td")
+    .attr("id", "metro-map");
+  row.append("td")
+    .attr("id", "show-image")
+    .style("width", 600 + "px");
+  row = tab.append("tr")
+  row.append("td")
+    .attr("id", "social-graph");
+  row.append("td")
+    .attr("id", "show-names")
+    .style("width", 100 + "px");
+    
+</script>
+
+</body>
+</html>
