@@ -58,7 +58,7 @@
     var names = tab.append("tr");
 
   for (var i = 0; i < numTimes; i++) {
-    var graphfile = "newTest" + i + "-graph.json";
+    var graphfile = "files/newTest" + i + "-graph.json";
     graphs.append("td")
       .attr("id", "social-graph" + i);
     names.append("td")
@@ -66,7 +66,7 @@
     // add regular graph content
     social(graphfile, i, 200, color, d3.select("#social-graph" + i));
 		  
-    graphfile = "5-12-14_test" + i + "-graph.json";
+    graphfile = "files/5-12-14_test" + i + "-graph.json";
     faces.append("td")
       .attr("id", "face-graph" + i);
     // add face graph content

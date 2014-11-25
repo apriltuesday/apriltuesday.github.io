@@ -7,34 +7,23 @@
     <script type="text/javascript" src="d3.v3.js"></script>
     <script type="text/javascript" src="braids.js"></script>
     <script src="/pico/client.js"></script>
-<!--    <script> for running python!
-      pico.load("main");
-    </script> -->
+    <script>
+      pico.load("braids");
+    </script>
 <style>
 
 </style>
 <body>
 
   <table cellspacing="10">
+    <tr>
+      <td id="braid-panel" style="width: 500px"></td>
+      <td id="text-panel" style="width: 200px"></td>
+    </tr>
   </table>
 
 <script>
-  main.mapFromParams(prefix, [], [], [], []);
-
-  // make table
-  var tab = d3.select("table");
-  var row = tab.append("tr");
-  row.append("td")
-    .attr("id", "metro-map");
-  row.append("td")
-    .attr("id", "show-image")
-    .style("width", 600 + "px");
-  row = tab.append("tr")
-  row.append("td")
-    .attr("id", "social-graph");
-  row.append("td")
-    .attr("id", "show-names")
-    .style("width", 100 + "px");
+  braids.main();
     
 </script>
 
