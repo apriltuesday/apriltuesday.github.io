@@ -3,27 +3,34 @@
   <head>
     <meta charset="UTF-8">
     <title>{{ page.title | default: site.title }}</title>
-    <meta name="description" content="{{ page.description | default: site.description | default: site.github.project_tagline }}"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#157878">
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Bitter:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
+    <link rel="stylesheet" href="/assets/css/font-awesome-4.7.0/css/font-awesome.min.css">
   </head>
   <body>
     <section class="page-header">
-      <h1 class="project-name">{{ site.title | default: site.github.repository_name }}</h1>
-      <h2 class="project-tagline">{{ site.description | default: site.github.project_tagline }}</h2>
-      
-      <!-- buttons -->
-      <a href="/" class="btn">Home</a>
-      <a href="/projects" class="btn">Projects</a>
-      <a href="/blog" class="btn">Blog</a>
+      <a href="/" class="project-name">{{ site.title }}</a>
+      <span class="header-buttons">
+      <a href="/" class="btn">about</a>
+      <a href="/projects" class="btn">projects</a>
+      <a href="/assets/files/CV2017.pdf" class="btn">cv</a>
+      <a href="/blog" class="btn">blog</a>
+      </span>
     </section>
 
     <section class="main-content">
       {{ content }}
 
       <footer class="site-footer">
+        <span class="site-footer-owner">
+          <a href="mailto:april.tuesday@gmail.com" class="btn-social btn-outline"><i class="fa fa-fw fa-envelope-o"></i></a>
+          <a href="https://www.facebook.com/apriltuesday" class="btn-social btn-outline"><i class="fa fa-fw fa-facebook"></i></a>
+          <a href="https://twitter.com/bachesch" class="btn-social btn-outline"><i class="fa fa-fw fa-twitter"></i></a>
+          <a href="https://www.linkedin.com/in/apriltuesday" class="btn-social btn-outline"><i class="fa fa-fw fa-linkedin"></i></a>
+          <a href="https://github.com/apriltuesday" class="btn-social btn-outline"><i class="fa fa-fw fa-github"></i></a>
+        </span>
         <span class="site-footer-credits">created by april with help from <a href="https://pages.github.com">github</a>, <a href="https://jekyllrb.com/">jekyll</a>, and <a href="https://github.com/pages-themes/cayman">cayman</a>.</span>
       </footer>
     </section>

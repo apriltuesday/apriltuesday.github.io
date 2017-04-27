@@ -1,7 +1,6 @@
 # personal website
 
 ## to-do:
-* some more global variables in config
-* rss feeds - separate ones, everything?
-* different permalinks for blog and projects
-* format project page differently (e.g. images & blurbs)
+* less dumb blog index (with pagination etc.)
+* better formatting in general – should be able to unify blog & project with single img + blurb layout
+* write more/better about projects
