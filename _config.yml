@@ -1,3 +1,8 @@
 name: April Tuesday Shen
+title: April Tuesday Shen
+description: Machine Learning Engineer - Lifetime Learner - Cat Aficionado
+
 markdown: kramdown
+theme: jekyll-theme-cayman
+
 permalink: /blog/:year/:month/:day/:title
