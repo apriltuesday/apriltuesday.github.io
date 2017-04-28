@@ -324,7 +324,7 @@ a {
   }
 
   @include medium {
-    font-size: 1rem;
+    font-size: 0.9rem;
   }
 
   @include small {
@@ -332,11 +332,36 @@ a {
   }
 }
 
-.site-footer-owner {
+.site-footer-social {
+  text-align: center;
   display: block;
-  font-weight: bold;
 }
 
 .site-footer-credits {
+  text-align: center;
   color: $blockquote-text-color;
+  display: block;
 }
+
+.post-image {
+  @include large {
+    max-width: 50%;
+    padding: 0.6rem 0.9rem;
+  }
+
+  @include medium {
+    max-width: 50%;
+    padding: 0.6rem 0.9rem;
+  }
+
+  @include small {
+    max-width: 100%;
+    padding: 0.75rem;
+  }
+}
+
+.post {
+  display: flex;
+  align-items: center;
+}
+

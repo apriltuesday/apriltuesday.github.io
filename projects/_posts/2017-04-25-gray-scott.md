@@ -7,4 +7,5 @@ year: 2017
 permalink: /projects/gray-scott
 ---
 A Twitter bot that posts gifs of Gray-Scott simulations.
-- [Twitter](https://twitter.com/GrayScottBot)
+
+[twitter](https://twitter.com/GrayScottBot) &#9900; [code](https://github.com/apriltuesday/gray-scott-bot)
