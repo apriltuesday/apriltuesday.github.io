@@ -333,14 +333,41 @@ a {
 }
 
 .site-footer-social {
-  text-align: center;
+  font-size: 1.25rem;
   display: block;
+
+  @include large {
+    float: left;
+    text-align: left;
+  }
+
+  @include medium {
+    float: left;
+    text-align: left;
+  }
+
+  @include small {
+    text-align: center
+  }
 }
 
 .site-footer-credits {
-  text-align: center;
   color: $blockquote-text-color;
   display: block;
+
+  @include large {
+    float: right;
+    text-align: right;
+  }
+
+  @include medium {
+    float: right;
+    text-align: right;
+  }
+
+  @include small {
+    text-align: center
+  }
 }
 
 .post-image {
