@@ -1,10 +1,9 @@
 ---
-layout: post
+layout: project
 title: Decoding Decoders
-image: /assets/images/decoders.png
-categories: projects
 year: 2018
-permalink: /projects/decoders
+image: /assets/images/decoders.png
+category: projects
 ---
 Introduces the notion of an optimal representation space to understand how distributed representations perform in downstream similarity tasks.
 

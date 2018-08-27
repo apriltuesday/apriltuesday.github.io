@@ -1,10 +1,9 @@
 ---
-layout: post
+layout: project
 title: PSVM
-image: /assets/images/psvm.png
-categories: projects
 year: 2013
-permalink: /projects/psvm
+image: /assets/images/psvm.png
+category: projects
 ---
 My undergraduate honors thesis on an algorithm for supervised classification using an ensemble of linear SVMs.
 

@@ -1,0 +1,14 @@
+---
+layout: default
+---
+<h1>{{ page.title }} ({{ page.year }})</h1>
+
+{% if page.image != nil %}
+<div class="post-image">
+  <img src="{{ page.image }}">
+</div>
+{% endif %}
+
+<div class="post-content">
+  {{ content }}
+</div>

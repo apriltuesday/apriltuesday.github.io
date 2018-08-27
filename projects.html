@@ -1,0 +1,23 @@
+---
+layout: default
+title: Projects
+category: projects
+permalink: /projects/index.html
+---
+
+{% assign items = site.projects | sort: 'year' %}
+{% for item in items reversed %}
+
+  <h3><span>{{ item.year }}</span> » <a href="{{ item.url }}">{{ item.title }}</a></h3>
+
+  <div class="post">
+    <div class="index-image"><img src="{{ item.image }}"></div>
+    <div style="text-align:right;">{{ item.content }}</div>
+    <div style="clear:both;"></div>
+  </div>
+
+  {% unless forloop.last %}
+  <hr>
+  {% endunless %}
+
+{% endfor %}
