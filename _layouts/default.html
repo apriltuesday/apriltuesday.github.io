@@ -34,12 +34,12 @@
   </head>
   <body>
     <section class="page-header">
-      <a href="/" class="project-name">{{ site.title }}</a>
+      <a href="/" class="project-name">{{ site.title }}</a>{% if page.category != nil %}<a href="/{{page.category}}" class="category-name"> / {{ page.category }}</a> {% endif %}
       <span class="header-buttons">
       <a href="/" class="btn">about</a>
       <a href="/projects" class="btn">projects</a>
       <a href="/assets/files/CV2017.pdf" class="btn">cv</a>
-      <!-- <a href="/blog" class="btn">blog</a> -->
+      <a href="/blog" class="btn">blog</a>
       </span>
     </section>
 

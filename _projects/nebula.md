@@ -3,6 +3,7 @@ layout: project
 title: Nebula
 year: 2010
 image: /assets/images/nebula.png
+category: projects
 ---
 A user-friendly GUI for managing large-scale distributed systems.  I contributed during an undergraduate research summer.
 

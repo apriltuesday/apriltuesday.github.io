@@ -137,6 +137,27 @@ a {
   }
 }
 
+.category-name {
+  margin-top: 0;
+  margin-bottom: 0.1rem;
+  color: rgba(255, 255, 255, 0.8);
+  &:hover {
+    text-decoration: none;
+  }
+
+  @include large {
+    font-size: 2.25rem;
+  }
+
+  @include medium {
+    font-size: 2.25rem;
+  }
+
+  @include small {
+    font-size: 1.75rem;
+  }
+}
+
 .main-content {
   word-wrap: break-word;
 

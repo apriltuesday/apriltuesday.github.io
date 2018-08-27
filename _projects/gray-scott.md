@@ -3,6 +3,7 @@ layout: project
 title: Gray-Scott Bot
 year: 2017
 image: /assets/images/NASA.gif
+category: projects
 ---
 A Twitter bot that posts gifs of Gray-Scott simulations.
 
