@@ -5,6 +5,12 @@ title: Blog
 
 <h1>{{ page.title }}</h1>
 {% for item in site.posts %}
-  <h4><span>{{ item.date | date_to_string }}</span> » <a href="{{ item.url }}">{{ item.title }}</a></h4>
+
+  <h3><span>{{ item.date | date_to_string }}</span> » <a href="{{ item.url }}">{{ item.title }}</a></h3>
   <p>{{ item.excerpt }}</p>
+
+  {% unless forloop.last %}
+  <hr>
+  {% endunless %}
+
 {% endfor %}

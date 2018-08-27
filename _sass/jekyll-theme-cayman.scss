@@ -390,8 +390,16 @@ a {
   }
 }
 
+.index-image {
+  display: block;
+  margin: auto auto;
+  max-width: 50%;
+  padding: 0.6rem 0.9rem;
+}
+
 .post {
   display: flex;
+  justify-content: flex-end;
   align-items: center;
 }
 
