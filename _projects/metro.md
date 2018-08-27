@@ -1,10 +1,8 @@
 ---
-layout: post
+layout: project
 title: Metro Maps of Photos
-image: /assets/images/metro.png
-categories: projects
 year: 2014
-permalink: /projects/metro
+image: /assets/images/metro.png
 ---
 Exploring a new way of creating intelligent structured visualizations of personal photo collections. Part of my research at graduate school (before I left).
 

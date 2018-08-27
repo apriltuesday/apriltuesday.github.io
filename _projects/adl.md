@@ -1,10 +1,8 @@
 ---
-layout: post
+layout: project
 title: Active Deep Learning
-image: /assets/images/adl.png
-categories: projects
 year: 2016
-permalink: /projects/adl
+image: /assets/images/adl.png
 ---
 Preliminary work on integrating active learning and neural networks. I didn't get very far but would love to get back to it...
 

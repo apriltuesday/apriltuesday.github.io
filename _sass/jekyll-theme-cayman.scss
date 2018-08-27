@@ -371,8 +371,11 @@ a {
 }
 
 .post-image {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
   @include large {
-    max-width: 50%;
+    max-width: 100%;
     padding: 0.6rem 0.9rem;
   }
 

@@ -7,3 +7,8 @@ permalink: /blog/:year/:month/:day/:title
 
 plugins:
   - jemoji
+
+collections:
+  projects:
+    output: true
+    permalink: /:collection/:name

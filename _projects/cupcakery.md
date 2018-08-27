@@ -1,10 +1,8 @@
 ---
-layout: post
+layout: project
 title: Cupcakery
-image: /assets/images/cupcake.png
-categories: projects
 year: 2011
-permalink: /projects/cupcakery
+image: /assets/images/cupcake.png
 ---
 An animated short made for my undergraduate computer graphics class.  It's about a cupcake.
 

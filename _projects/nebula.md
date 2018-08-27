@@ -1,10 +1,8 @@
 ---
-layout: post
+layout: project
 title: Nebula
-image: /assets/images/nebula.png
-categories: projects
 year: 2010
-permalink: /projects/nebula
+image: /assets/images/nebula.png
 ---
 A user-friendly GUI for managing large-scale distributed systems.  I contributed during an undergraduate research summer.
 
