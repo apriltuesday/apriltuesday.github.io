@@ -4,14 +4,10 @@ title: "Loss Surfaces, Mode Connectivity, and Fast Ensembling of DNNs"
 date: 2018-03-11
 ---
 
-# TL;DR
-
 The paper presents an algorithm for finding high-accuracy polygonal paths between local minima in
 the loss surfaces of neural networks. Analysis of performance characteristics of models
 corresponding to different points along these paths leads to an efficient and high-performance
 method for ensembling neural networks.
-
-# Details
 
 ## But why do we want this path anyway
 
@@ -80,7 +76,7 @@ loss by much
 2. Loss can decrease even after a relatively small step along the low-loss path, which inspires the
 cyclic learning rate schedule in a way I don't quite understand right now.
 
-# Final thoughts
+## Final thoughts
 
 I love the effusive final paragraph listing all the kickass research directions the authors clearly
 believe this work should open up. Maybe this effusiveness is contagious, because I also find this
