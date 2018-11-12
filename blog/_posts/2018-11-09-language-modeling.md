@@ -57,7 +57,7 @@ category: blog
 * an aside - what if you used layer representations from OpenAI's Transformer as ELMo would?
 * weirdly ends up only using a few layers
     * actually the same 5 layers for different tasks!
-    * this is not what ELMo's layers do
+    * this is not what happens with ELMo itself (uses all layers)
 * some hand-wavy guesses as to why this might happen, but basically it's a big :question: for now
 
 ![layers](/assets/images/2018-11-09/layers.jpg "layers")
@@ -73,14 +73,14 @@ category: blog
     * important to really evaluate a model *outside* a sterile black-box test environment
         * a good score on PTB does not mean it's a good parser!
 * there are other good reasons for AllenNLP, but demos are actually quite a big one!
-* so yeah, take a gander at [them demos](http://demo.allennlp.org/)
+* so yeah, take a gander at [them demos](http://demo.allennlp.org/) :ok_hand:
 
 ## Postscript
 
-After this meetup, I had an interesting chat with some people at work about how the sharp syntax / semantics distinction is something that linguists (basically Chomsky, natch) introduced artificially to try to understand language.  It may in fact have little or nothing to do with how language *actually* works.  Of course this doesn't detract from the utility of the distinction for the study of language, but it does raise the question of whether this is a useful piece of knowledge for neural networks or not.
+After this meetup, I had an interesting chat with some people at work about how the sharp syntax&nbsp;/&nbsp;semantics distinction is something that linguists (basically Chomsky, natch) introduced, somewhat artificially, to try to understand language.  It may in fact have little or nothing to do with how language *actually* works.  Of course this doesn't detract from the utility of the distinction for the study of language, but it does raise the question of whether this is a useful piece of knowledge for neural networks or not.
 
-And in particular, while a connection between an aspect of a particular model and syntax / semantics tasks is an appealing piece of evidence supporting the notion that that model is *really understanding* language, we should take this with a grain of salt – because who knows if even human linguists are *really understanding* language!  Though it is fascinating to think that a language model trained on a shit ton of unstructured text might have happened upon a similar "mental model" for how language works as Chomsky did.
+And in particular, while a connection between an aspect of a particular model and ability to solve syntax vs. semantics tasks is an appealing piece of evidence supporting the notion that that model is *really understanding* language, we should take this with a grain of salt – because who knows if even human linguists are *really understanding* language!  Though it is fascinating to think that a language model trained on a shit ton of unstructured text might have happened upon a similar "mental model" for how language works as Chomsky did.
 
-Finally, Peters and Neumann's analysis connecting representational depth in the network with task performance requiring different amounts of context actually kinda supports the notion that the distinction between syntax and semantics is not so sharp after all, if you think about how it fleshes out the earlier claim that "shallow is good at syntax, deep is good at semantics".  In fact it seems that there is a spectrum from small context, syntax-y stuff to large context, semantics-y stuff – and we can use layers of deep networks to step from one to the other.
+Finally, the connection between depth in the network and amount of context actually kinda supports the notion that the distinction between syntax and semantics is not so sharp after all, if you think about how it fleshes out the earlier claim that "shallow is good at syntax, deep is good at semantics".  In fact, it does seem that there is a spectrum from small context, syntax-y stuff to large context, semantics-y stuff – and we can use layers of deep networks to effectively step from one to the other.
 
-Not sure if this makes any sense, even to the individuals who were a part of this conversation, but anyway I find this quite interesting, and in particular the artificiality of the divide between syntax and semantics had never really occurred to me.
+Not sure if this makes any sense (even to the individuals who were a part of this conversation), but anyway I find this stuff quite interesting!
