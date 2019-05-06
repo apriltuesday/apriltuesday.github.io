@@ -6,7 +6,7 @@ category: blog
 ---
 
 Part of my series of notes from [ICLR 2019](https://iclr.cc/Conferences/2019) in New Orleans.
-These are talks (and panels) from the [Safe ML Workshop](https://sites.google.com/view/safeml-iclr2019/home).
+These are talks (and panels) gfrom the [Safe ML Workshop](https://sites.google.com/view/safeml-iclr2019/home).
 
 ## Introduction
 * ensure ML algorithms
@@ -111,6 +111,47 @@ These are talks (and panels) from the [Safe ML Workshop](https://sites.google.co
 * do failure cases help us understand what causes failure?
 * this is like a pretty simple and straightforward talk... just all this adversarial learning stuff but for RL :cool:
 
+## Ian Goodfellow: The case for dynamic defenses against adversarial examples
+* based on [this](https://arxiv.org/abs/1903.06293)
+* adversarial examples: anything that is designed to mess with a model
+    * not just imperceptible, etc.
+* the research community is overfitting to the problem he proposed 5 years ago...
+    * small norm ball perturbation model
+* need more realistic threat models
+    * no reason for attackers to stick to this
+    * value alignment - corresponds to only first few steps of optimisation
+* only focusing on starting points within test set and perturbing
+    * "expectimax"
+    * still not really solved after 2000 papers, but maybe some people should be moving on
+* what about "true max"?
+    * test set attack (Gilmer 2018)
+* adversarial training improves acc on adversarial set but tends to decrease on natural test set
+* failure rate r -> 0 will never happen (except for simple tasks), so can't defeat the test set attack
+* (btw humans also have non-zero failure rate, so not an existance proof)
+* what about stochastic defenses?
+    * model still can't be perfect, so still a failure rate
+* what about abstention?
+    * still just reducing r, still not perfect (m+1 classes)
+* what about dynamic?
+    * breaks train / infer division :devil:
+    * behaviour that changes after deployment
+    * v. scary
+* making models less flaky should make things more secure
+* "memorization" defense (with or without abstention)
+    * existence of dynamic defense that outperforms fixed defenses on test set attack
+* dynamic is necessary, probably not sufficient
+* does dynamic always need an oracle? hard to imagine what it looks like without
 
-
-
+## Panel Number Two
+* how do we get good specifications to then optimize?
+    * they're not just handed down from god...
+    * Center for Human Compatible AI
+* "One thing that will get easier is convincing people of the importance of AI safety research" -Goodfellow
+* make AIs that make the same mistakes as humans?
+    * dynamic proposal: can't make a perfect system, so make mistakes not predictable
+    * there isn't even a ground truth for most tasks, so of course AI systems will make mistakes
+* AI safety: how do you deal with the fact that humans are suboptimal?
+* think about how safety works in other fields of comp sci
+    * e.g. Byzantine fault tolerance
+* "The Elephant in the Room" paper
+* Goodfellow wants less crappy adversarial example papers :+1:
