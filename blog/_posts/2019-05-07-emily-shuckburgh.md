@@ -26,7 +26,7 @@ Part of my series of notes from [ICLR 2019](https://iclr.cc/Conferences/2019) in
 
 ![monitor](/assets/images/2019-iclr/monitor.jpg "monitor")
 
-* **treat** - models for evidence-driven decision making
+* **treat** – models for evidence-driven decision making
 * random fact: typical climate model is >1 million lines of Fortran code
 * global models of e.g. surface temps are pretty good, BUT
     * need more granularity for the level that decisions are made – e.g. in cities
