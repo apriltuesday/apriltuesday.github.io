@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Léon Bottou: Learning Representations Using Causal Invariance"
-date: 2019-05-06
+date: 2019-05-06 12:00:00
 category: blog
 ---
 

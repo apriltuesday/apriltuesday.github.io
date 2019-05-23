@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Cynthia Dwork: Recent Developments in Algorithmic Fairness"
-date: 2019-05-06
+date: 2019-05-06 9:00:00
 category: blog
 ---
 

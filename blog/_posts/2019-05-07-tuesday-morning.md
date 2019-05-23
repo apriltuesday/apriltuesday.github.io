@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Tuesday Morning Contributed Talks"
-date: 2019-05-07 09:00:00
+date: 2019-05-07 10:00:00
 category: blog
 ---
 
