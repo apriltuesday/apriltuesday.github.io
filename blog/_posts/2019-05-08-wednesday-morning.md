@@ -69,38 +69,42 @@ See if you can tell when my caffiene crash hit based on emoji density.
 ![biobank](/assets/images/2019-iclr/knockoff-results.jpg "biobank")
 
 ## Deterministic Variational Inference for Robust Bayesian Neural Networks
-* bayesian neural nets
+* Bayesian neural nets
     * weights as probability distributions
     * estimate posterior of weights given inputs & outputs
-* ELBO objective - fit the data, don't stray from the prior
-* Challenge I: gradient variance for monte carlo methods
-* solution: deterministic variation inference instead
+* ELBO objective – fit the data, don't stray from the prior
+
+![bayesian](/assets/images/2019-iclr/bayesian.jpg "bayesian")
+
+* challenge I: gradient variance for Monte Carlo methods
+    * solution: deterministic variational inference instead
 * propagating uncertainties
     * propagate distributions deterministically, rather than propagating samples
     * output is Gaussian (but computing mean & variance is actually a bit tricky... need to approximate)
-* Challenge II: prior tuning to choose a good prior
-* solution: empirical bayes rather than cross-validation
+* challenge II: prior tuning to choose a good prior
+    * solution: empirical Bayes rather than cross-validation
 * deterministic and robust :+1:
 
 ## FFJORD: Free-Form Continuous Dynamics for Scalable Reversible Generative Models
 * want reversible generative models
-* unrestricted functions (e.g. general neural networks...)
+* but we like unrestricted functions (e.g. general neural networks...)
     * not generally invertible
-    * computation of log determinant of jacobian inefficient
-* previous solutions suck, use ours instead
-    * (NB. speaker did NOT say this)
-* discrete time dynamics of generaive models
+    * computation of log determinant of Jacobian inefficient
+* discrete time dynamics of generative models
 * but what if... continuous time? :thinking_face:
     * invertibility just by reversing the direction of integration
-    * efficient log-prob - O(n) instead of O(n^3)
+    * efficient log-prob – *O(n)* instead of *O(n<sup>3</sup>)*
     * without restricting function at all
-* new problem: computing Jacobian explicitly is O(n^2) :sweat:
-    * estimate jacobian trace in linear time, phew :relieved:
+* new problem: computing Jacobian explicitly is *O(n<sup>2</sup>)* :sweat:
+    * estimate Jacobian trace in linear time, phew :relieved:
 * experiments hooray :tada:
+
+![ffjord](/assets/images/2019-iclr/ffjord.jpg "ffjord")
+
 * drawbacks
     * non-constant computation time (based on numerical solvers), on average pretty slow
     * relies on new methods, i.e. neural ODEs
-    * much engineering work to be done!
+    * much engineering work to be done! :hammer_and_wrench:
 * Q&A
     * question: generate text?
     * answer: lol :sweat_smile:
