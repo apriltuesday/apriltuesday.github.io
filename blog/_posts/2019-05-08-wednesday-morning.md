@@ -1,7 +1,7 @@
 ---
 layout: post
-title: "Wednesday Morning talks"
-date: 2019-05-08
+title: "Wednesday Morning Contributed Talks"
+date: 2019-05-08 10:00:00
 category: blog
 ---
 
@@ -14,73 +14,97 @@ See if you can tell when my caffiene crash hit based on emoji density.
     * rewards might be sparse / distant
     * might want to discover new things, which wouldn't necessarily be in annotations
 * do this for images woohoo
-* encode with CNN
-* estimate mutual information between image and representation
-    * then maximize to get good rep
-* using local structure is important
+
+![estimating](/assets/images/2019-iclr/estimating.jpg "estimating")
+
+* estimate **mutual information** between image and representation
+    * then maximize to get good representation
+* using local structure is important!
     * irrelevant info in e.g. background is still part of info content of image, but we want to ignore that
     * compute MI on all patches simultaneously ("self-prediction")
-* local and global features
-* evaluation - downstream classifier, measure MINE for mutual info, etc.
+
+![local structure](/assets/images/2019-iclr/local-structure.jpg "local structure")
+
+* evaluation – downstream classifier, measure MINE for mutual info, etc.
 * can also incorporate orderless autoregression (?)
-* some cool followup work, including on graphs and biomedical data
+* some cool follow-up work, including on [graphs](https://arxiv.org/abs/1809.10341) and [biomedical data](https://arxiv.org/abs/1904.10931)
 
 ## KnockoffGAN: Generating Knockoffs for Feature Selection using Generative Adversarial Networks
 * identify features that are **relevant** to an outcome
     * outcome conditionally independent of remaining features given selected features
 * want to control false discovery rate (FDR), since feature validation in e.g. medicine is costly
-* Knockoffs (Candes et al 2016)
+
+![knockoffs](/assets/images/2019-iclr/knockoffs.jpg "knockoffs")
+
+* **knockoffs** ([Candes et al. 2016](https://arxiv.org/abs/1610.02351))
     * construct knockoff variables, learn weights, and select based on desired FDR
-    * A. encode everything about features, but nothing about outcome
-    * B. swapping real features w/ knockoff doesn't change joint
-    * success of method "only" depends on generating these knockoffs, not on validity of model
+    * success of method "only" depends on generating these knockoffs, *not* on validity of model
     * original paper does this only for Gaussian distributions, sad face
-* property B in particular is tricky to satisfy in general
+
+![challenges](/assets/images/2019-iclr/knockoff-challenges.jpg "challenges")
+
+* desired properties of knockoffs
+    * A: encode everything about features, but nothing about outcome
+    * B: swapping real features w/ knockoff doesn't change joint
+* property B is especially tricky to satisfy in general
+
+![knockoffgan](/assets/images/2019-iclr/knockoff-gan.jpg "knockoffgan")
+
 * propose doing this with GANs
-* discriminator - perform a swap (and provide a hint), try to predict what vars were swapped
     * flexibility in GAN framework for deciding what the game is
-    * if the joint is the same this would be tricky
+    * this is a really nice point! I'd like to see more people doing this sort of thing with GANs and not just making pretty pictures (though they are *really* pretty pictures)
+* discriminator
+    * perform a swap (and provide a hint)
+    * try to predict what variables were swapped
 * sadly this isn't quite enough, so add WGAN discriminator to regularise just between features
     * corresponds to swapping all the variables
     * reduces search space
 * MINE (mutual information neural estimation) – minimise MI
-    * greater independence between vars & knockoffs
+    * greater independence between variables & knockoffs
 * generator – pretty standard
-* experiments hooray – mostly synthetic, some qualitative results on real data
+* experiments hooray
+    * mostly synthetic
+    * some qualitative results on real data (including biobank!)
+
+![biobank](/assets/images/2019-iclr/knockoff-results.jpg "biobank")
 
 ## Deterministic Variational Inference for Robust Bayesian Neural Networks
-* bayesian neural nets
+* Bayesian neural nets
     * weights as probability distributions
     * estimate posterior of weights given inputs & outputs
-* ELBO objective - fit the data, don't stray from the prior
-* Challenge I: gradient variance for monte carlo methods
-* solution: deterministic variation inference instead
+* ELBO objective – fit the data, don't stray from the prior
+
+![bayesian](/assets/images/2019-iclr/bayesian.jpg "bayesian")
+
+* challenge I: gradient variance for Monte Carlo methods
+    * solution: deterministic variational inference instead
 * propagating uncertainties
     * propagate distributions deterministically, rather than propagating samples
     * output is Gaussian (but computing mean & variance is actually a bit tricky... need to approximate)
-* Challenge II: prior tuning to choose a good prior
-* solution: empirical bayes rather than cross-validation
+* challenge II: prior tuning to choose a good prior
+    * solution: empirical Bayes rather than cross-validation
 * deterministic and robust :+1:
 
 ## FFJORD: Free-Form Continuous Dynamics for Scalable Reversible Generative Models
 * want reversible generative models
-* unrestricted functions (e.g. general neural networks...)
+* but we like unrestricted functions (e.g. general neural networks...)
     * not generally invertible
-    * computation of log determinant of jacobian inefficient
-* previous solutions suck, use ours instead
-    * (NB. speaker did NOT say this)
-* discrete time dynamics of generaive models
+    * computation of log determinant of Jacobian inefficient
+* discrete time dynamics of generative models
 * but what if... continuous time? :thinking_face:
     * invertibility just by reversing the direction of integration
-    * efficient log-prob - O(n) instead of O(n^3)
+    * efficient log-prob – *O(n)* instead of *O(n<sup>3</sup>)*
     * without restricting function at all
-* new problem: computing Jacobian explicitly is O(n^2) :sweat:
-    * estimate jacobian trace in linear time, phew :relieved:
+* new problem: computing Jacobian explicitly is *O(n<sup>2</sup>)* :sweat:
+    * estimate Jacobian trace in linear time, phew :relieved:
 * experiments hooray :tada:
+
+![ffjord](/assets/images/2019-iclr/ffjord.jpg "ffjord")
+
 * drawbacks
     * non-constant computation time (based on numerical solvers), on average pretty slow
     * relies on new methods, i.e. neural ODEs
-    * much engineering work to be done!
+    * much engineering work to be done! :hammer_and_wrench:
 * Q&A
     * question: generate text?
     * answer: lol :sweat_smile:
