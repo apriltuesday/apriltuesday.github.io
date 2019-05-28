@@ -91,11 +91,11 @@ See if you can tell when my caffiene crash hit based on emoji density.
     * not generally invertible
     * computation of log determinant of Jacobian inefficient
 * discrete time dynamics of generative models
-* but what if... continuous time? :thinking_face:
+* but what if... continuous time? :thinking:
     * invertibility just by reversing the direction of integration
-    * efficient log-prob – *O(n)* instead of *O(n<sup>3</sup>)*
+    * efficient log-prob – *O*(*n*) instead of *O*(*n*<sup>3</sup>)
     * without restricting function at all
-* new problem: computing Jacobian explicitly is *O(n<sup>2</sup>)* :sweat:
+* new problem: computing Jacobian explicitly is *O*(*n*<sup>2</sup>) :sweat:
     * estimate Jacobian trace in linear time, phew :relieved:
 * experiments hooray :tada:
 
