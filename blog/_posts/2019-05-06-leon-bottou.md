@@ -40,8 +40,8 @@ I missed the beginning of this one and had a little trouble catching up, so thes
     * numerical issues
     * realizable problems work differently (colored MNIST isn't realizable)
 * phenomenon (pre-label) vs. interpretation (post-label, i.e. annotation)
-    * supervised - designed to be realizable, labelling supposed to be deterministic 
-    * unsupervised - label comes from nature, not necessarily realizable
+    * supervised – designed to be realizable, labelling supposed to be deterministic 
+    * unsupervised – label comes from nature, not necessarily realizable
 * to sum up...
 
 ![invariance summary](/assets/images/2019-iclr/invariance-summary.jpg "invariance summary")
