@@ -21,7 +21,7 @@ Part of my series of notes from [NAACL-HLT 2019](https://naacl2019.org/) in Minn
 * motivation: testing inference is difficult
 * crowdsourcing interesting / unusual examples of inference is tricky
 * recognising entailment is an artificial task (yes!!!)
-* natural yes/no question data can help here
+* **natural yes/no questions** can help here
     * quite challenging
         * rarely purely factoid ("Was Obama born in 1961?")
         * non-trivial types of reasoning
@@ -45,7 +45,8 @@ Part of my series of notes from [NAACL-HLT 2019](https://naacl2019.org/) in Minn
 * pre-training on entailment helps a lot
 * "as we've come to expect, BERT does the best"
     * but adding MNLI helps even BERT
-* [go explore the data](goo.gl/boolq), also will become part of [SuperGLUE](https://super.gluebenchmark.com/)
+* [go explore the data](goo.gl/boolq)!
+    * also will become part of [SuperGLUE](https://super.gluebenchmark.com/)
 
 ## Repurposing Entailment for Multi-Hop QA Tasks
 * using pre-trained entailment models for QA
@@ -77,7 +78,7 @@ Part of my series of notes from [NAACL-HLT 2019](https://naacl2019.org/) in Minn
 
 ![beyond](/assets/images/2019-naacl/beyond.jpg "beyond")
 
-* hence the conversational QA (CoQA) task
+* hence the **conversational QA** (CoQA) task
 * conversational history is critical to answering questions naturally
     * coreference, omitted context, etc.
 * goals:
@@ -106,7 +107,7 @@ Part of my series of notes from [NAACL-HLT 2019](https://naacl2019.org/) in Minn
     * importance of conversation history
         * but after a certain point models stop using history, whereas human performance continues to improve
 * "...and then BERT came out"
-    * does better than humans now on this dataset :facepalm:
+    * does better than humans now on this dataset :face_palm:
 * "so... what are we going to do? this paper *just* came out...." :joy:
 * next steps
     * why do these models work? are they resolving coreference or using heuristics?

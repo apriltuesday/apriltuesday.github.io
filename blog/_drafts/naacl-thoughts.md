@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Thoughts"
+title: "NAACL Thoughts"
 date: 2019-06-03 00:00:00
 category: blog
 ---
@@ -28,7 +28,8 @@ Miscellaneous thoughts from NAACL...
 * lots of grad students / researchers at UW, Penn, AI2
 * Microsoft researcher on paraphrases (writing assistance)
 * Boston educational company
-* Edinburgh language learning person, I forget where this was!
+* Edinburgh language learning person who came to our poster
 * professor and chatbot company employee in California
 * Singapore researcher on nurse / patient dialogues
 * lots of Romanians
+* Google Assistant employee

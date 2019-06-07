@@ -52,7 +52,7 @@ Part of my series of notes from [NAACL-HLT 2019](https://naacl2019.org/) in Minn
 
 * annotation disagreement is signal NOT noise!
 * [FrameNet](https://framenet.icsi.berkeley.edu/fndrupal/) – dataset of crowd-annotated frames
-* then he kicked the cable :facepalm: – "as you can't see here..."
+* then he kicked the cable :face_palm: – "as you can't see here..."
 
 ## Inoculation by Fine-Tuning
 * [paper here](https://arxiv.org/abs/1904.02668)

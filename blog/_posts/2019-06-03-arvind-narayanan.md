@@ -40,7 +40,7 @@ Part of my series of notes from [NAACL-HLT 2019](https://naacl2019.org/) in Minn
 
 ## Understanding culture helps discover bias in ML
 * don't need to be a psychology or sociology expert, some commonsense knowledge helps
-    * NB. this is why we need diversity in ML! Speaker didn't say this, but I am!
+    * NB. this is why we need diversity in ML! the speaker didn't say this, but I am definitely saying it!
 * [Rudinger et al., NAACL 2018](https://www.aclweb.org/anthology/N18-2002) – gender bias in coreference resolution for occupations
 * [Blodget & O'Connor 2017](https://arxiv.org/abs/1707.00061) – racial bias in language identification for different dialects
     * use census data to get probability distribution of demographics according to location

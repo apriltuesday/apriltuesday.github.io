@@ -7,7 +7,7 @@ category: blog
 
 Part of my series of notes from [NAACL-HLT 2019](https://naacl2019.org/) in Minneapolis.
 
-Slides for this tutorial are [here](https://drive.google.com/drive/folders/1E4uHe4_TD4yDJws3t1kXJQanUFJiqpBB), from which all the images in this post are taken.
+Slides for this tutorial are [here](https://drive.google.com/drive/folders/1E4uHe4_TD4yDJws3t1kXJQanUFJiqpBB), from which all the images in this post are taken (I was not well placed to take photos anyway).
 
 ## Part I: Adversarial Learning & GANs
 
@@ -50,7 +50,7 @@ Slides for this tutorial are [here](https://drive.google.com/drive/folders/1E4uH
 * [de Masson d'Autume et al., 2019 on arxiv](https://arxiv.org/abs/1905.09922) – Training Language GANs from Scratch
     * claims no MLE pre-training
     * per-timestamp dense rewards
-    * learning not sample-efficient with sparse end-state rewards, dense rewards help
+    * learning isn't sample-efficient with sparse end-state rewards, dense rewards help
 * why shouldn't NLP give up on GANs?
     * unsupervised :+1:
     * discriminator is often learning a **metric** – reward-learning
