@@ -40,7 +40,7 @@ Part of my series of notes from [NAACL-HLT 2019](https://naacl2019.org/) in Minn
     * inspired by "scheduled learning" in humans
 * adaptively learn how to move instances in the queue to sample
 * some analysis of how much queue instances match training data, diversity of instances, sampling policy
-* this seemed interesting but I got distracted, will read the paper I guess!
+* this seemed interesting but I got distracted, will read [the paper](https://www.aclweb.org/anthology/N19-1003) I guess!
 
 ## Neural Language Models and Psycholinguistic Subjects
 * what information is contained in representations learned from neural LMs?
