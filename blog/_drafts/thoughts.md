@@ -5,7 +5,7 @@ date: 2019-06-03 00:00:00
 category: blog
 ---
 
-Miscellaneous thoughts
+Miscellaneous thoughts from NAACL...
 
 ## Thoughts
 * UPenn work
@@ -22,3 +22,13 @@ Miscellaneous thoughts
 ## People's comments on the poster
 * try on languages with different characteristics, e.g. morphology, to understand more what vectors are using
 * disentangle effect of dataset vs. algorithm in what causes outliers etc.
+* "WHY"
+
+## People I met
+* lots of grad students / researchers at UW, Penn, AI2
+* Microsoft researcher on paraphrases (writing assistance)
+* Boston educational company
+* Edinburgh language learning person, I forget where this was!
+* professor and chatbot company employee in California
+* Singapore researcher on nurse / patient dialogues
+* lots of Romanians
