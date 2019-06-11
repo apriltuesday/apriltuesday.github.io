@@ -3,6 +3,7 @@ layout: post
 title: "Mirella Lapata: Learning Natural Language Interfaces with Neural Models"
 date: 2019-05-09 9:00:00
 category: blog
+tags: [iclr2019, ml, nlp, notes]
 ---
 
 Part of my series of notes from [ICLR 2019](https://iclr.cc/Conferences/2019) in New Orleans.

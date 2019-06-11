@@ -3,6 +3,7 @@ layout: post
 title: "Arvind Narayanan: Data as a Mirror of Society"
 date: 2019-06-03 09:00:00
 category: blog
+tags: [naacl2019, nlp, ethics, bias, notes]
 ---
 
 Part of my series of notes from [NAACL-HLT 2019](https://naacl2019.org/) in Minneapolis.

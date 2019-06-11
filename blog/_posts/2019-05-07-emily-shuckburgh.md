@@ -3,6 +3,7 @@ layout: post
 title: "Emily Shuckburgh: Can machine learning help to conduct a planetary healthcheck?"
 date: 2019-05-07 9:00:00
 category: blog
+tags: [iclr2019, ml, notes]
 ---
 
 Part of my series of notes from [ICLR 2019](https://iclr.cc/Conferences/2019) in New Orleans.

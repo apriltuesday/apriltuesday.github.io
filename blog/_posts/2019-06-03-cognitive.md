@@ -3,6 +3,7 @@ layout: post
 title: "Cognitive Track"
 date: 2019-06-03 11:00:00
 category: blog
+tags: [naacl2019, nlp, notes]
 ---
 
 Part of my series of notes from [NAACL-HLT 2019](https://naacl2019.org/) in Minneapolis.

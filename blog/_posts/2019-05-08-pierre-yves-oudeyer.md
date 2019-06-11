@@ -3,6 +3,7 @@ layout: post
 title: "Pierre-Yves Oudeyer: Developmental Autonomous Learning"
 date: 2019-05-08 9:00:00
 category: blog
+tags: [iclr2019, ml, notes]
 ---
 
 Part of my series of notes from [ICLR 2019](https://iclr.cc/Conferences/2019) in New Orleans.

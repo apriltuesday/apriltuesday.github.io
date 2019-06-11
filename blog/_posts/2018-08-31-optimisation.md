@@ -3,6 +3,7 @@ layout: post
 title: "Recurrent Models for Machine Perception and Advances in Optimisation"
 date: 2018-08-31
 category: blog
+tags: [ml meetup, ml, notes]
 ---
 
 Notes from the most recent [London Machine Learning Meetup](https://www.meetup.com/London-Machine-Learning-Meetup/). There were three talks, the last two were especially interesting to me... so here we go!

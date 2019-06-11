@@ -3,6 +3,7 @@ layout: post
 title: "Semantics Track"
 date: 2019-06-04 11:00:00
 category: blog
+tags: [naacl2019, nlp, notes]
 ---
 
 Part of my series of notes from [NAACL-HLT 2019](https://naacl2019.org/) in Minneapolis.
@@ -52,7 +53,7 @@ Part of my series of notes from [NAACL-HLT 2019](https://naacl2019.org/) in Minn
 
 * annotation disagreement is signal NOT noise!
 * [FrameNet](https://framenet.icsi.berkeley.edu/fndrupal/) – dataset of crowd-annotated frames
-* then he kicked the cable :face_palm: – "as you can't see here..."
+* then he kicked the cable – "as you can't see here..."
 
 ## Inoculation by Fine-Tuning
 * [paper here](https://arxiv.org/abs/1904.02668)
