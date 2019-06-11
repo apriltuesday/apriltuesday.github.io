@@ -3,6 +3,7 @@ layout: post
 title: "Zeynep Tufekci: While we're all worried about failures of machine learning, what dangers lurk if it (mostly) works?"
 date: 2019-05-08 12:00:00
 category: blog
+tags: [iclr2019, ml, ethics, notes]
 ---
 
 Part of my series of notes from [ICLR 2019](https://iclr.cc/Conferences/2019) in New Orleans. As you can maybe already guess, this talk was a little different!

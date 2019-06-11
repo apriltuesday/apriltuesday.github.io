@@ -3,6 +3,7 @@ layout: post
 title: "Question Answering Track"
 date: 2019-06-05 11:00:00
 category: blog
+tags: [naacl2019, nlp, notes]
 ---
 
 Part of my series of notes from [NAACL-HLT 2019](https://naacl2019.org/) in Minneapolis.
@@ -107,7 +108,7 @@ Part of my series of notes from [NAACL-HLT 2019](https://naacl2019.org/) in Minn
     * importance of conversation history
         * but after a certain point models stop using history, whereas human performance continues to improve
 * "...and then BERT came out"
-    * does better than humans now on this dataset :face_palm:
+    * does better than humans now on this dataset
 * "so... what are we going to do? this paper *just* came out...." :joy:
 * next steps
     * why do these models work? are they resolving coreference or using heuristics?

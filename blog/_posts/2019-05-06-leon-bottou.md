@@ -3,6 +3,7 @@ layout: post
 title: "Léon Bottou: Learning Representations Using Causal Invariance"
 date: 2019-05-06 12:00:00
 category: blog
+tags: [iclr2019, ml, notes]
 ---
 
 Part of my series of notes from [ICLR 2019](https://iclr.cc/Conferences/2019) in New Orleans.

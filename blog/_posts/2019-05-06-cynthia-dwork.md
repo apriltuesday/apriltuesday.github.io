@@ -3,6 +3,7 @@ layout: post
 title: "Cynthia Dwork: Recent Developments in Algorithmic Fairness"
 date: 2019-05-06 9:00:00
 category: blog
+tags: [iclr2019, ml, ethics, bias, notes]
 ---
 
 Part of my series of notes from [ICLR 2019](https://iclr.cc/Conferences/2019) in New Orleans.

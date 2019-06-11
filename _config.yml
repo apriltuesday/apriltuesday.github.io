@@ -6,8 +6,14 @@ theme: jekyll-theme-cayman
 
 permalink: /blog/:year/:month/:day/:title
 
+tag_page: /blog/tags/
+
 plugins:
   - jemoji
+  - jekyll-redirect-from
+
+whitelist:
+  - jekyll-redirect-from
 
 collections:
   projects:

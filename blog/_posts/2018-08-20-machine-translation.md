@@ -3,6 +3,7 @@ layout: post
 title: "Three Recent Directions in Neural Machine Translation"
 date: 2018-08-20
 category: blog
+tags: [nlp meetup, nlp, machine translation, notes]
 ---
 
 Kyunghyun Cho (FAIR and NYU), South England Natural Language Processing Meetup

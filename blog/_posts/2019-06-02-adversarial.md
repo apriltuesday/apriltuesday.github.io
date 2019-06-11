@@ -3,6 +3,7 @@ layout: post
 title: "Deep Adversarial Learning for NLP"
 date: 2019-06-02 10:00:00
 category: blog
+tags: [naacl2019, nlp, adversarial learning, notes]
 ---
 
 Part of my series of notes from [NAACL-HLT 2019](https://naacl2019.org/) in Minneapolis.

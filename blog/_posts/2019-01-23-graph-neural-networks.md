@@ -3,6 +3,7 @@ layout: post
 title: "Graph Neural Networks for Knowledge Base Question Answering"
 date: 2019-01-23
 category: blog
+tags: [nlp meetup, nlp, question answering, notes]
 ---
 
 [Daniil Sorokin (TU Darmstadt)](https://daniilsorokin.github.io/), South England Natural Language Processing Meetup.  Slides are [here](https://daniilsorokin.github.io/DS_GraphsQA_SENLPMeetup.pdf).

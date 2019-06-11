@@ -3,7 +3,9 @@ layout: post
 title: "Knowledge-Rich Deep Learning for Precision Medicine"
 date: 2018-08-03
 category: blog
+tags: [nlp meetup, medical ml, nlp, notes]
 ---
+
 [Hoifung Poon (MSR)](https://www.microsoft.com/en-us/research/people/hoifung/), South England Natural Language Processing Meetup
 
 ## Introduction

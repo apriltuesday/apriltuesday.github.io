@@ -3,6 +3,7 @@ layout: post
 title: "Tuesday Morning Contributed Talks"
 date: 2019-05-07 10:00:00
 category: blog
+tags: [iclr2019, ml, notes]
 ---
 
 Part of my series of notes from [ICLR 2019](https://iclr.cc/Conferences/2019) in New Orleans.

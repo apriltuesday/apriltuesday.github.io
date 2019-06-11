@@ -3,6 +3,7 @@ layout: post
 title: "Language Modeling for Contextual Representation Learning"
 date: 2018-11-09
 category: blog
+tags: [nlp meetup, nlp, language models, notes]
 ---
 
 [Mark Neumann (AI2)](http://markneumann.xyz/), South England Natural Language Processing Meetup. Slides are [here](https://drive.google.com/file/d/1ZzIVypQb4cU_LMF-IgjxdVrYwVW2NlT1/view).

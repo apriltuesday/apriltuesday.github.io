@@ -3,6 +3,7 @@ layout: post
 title: "Kieran Snyder: Leaving the Lab"
 date: 2019-06-05 09:00:00
 category: blog
+tags: [naacl2019, nlp, ethics, notes]
 ---
 
 Part of my series of notes from [NAACL-HLT 2019](https://naacl2019.org/) in Minneapolis.
