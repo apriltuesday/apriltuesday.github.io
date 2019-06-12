@@ -6,7 +6,7 @@ theme: jekyll-theme-cayman
 
 permalink: /blog/:year/:month/:day/:title
 
-tag_page: /blog/tags/
+tag_page: /blog/tags
 
 plugins:
   - jemoji
